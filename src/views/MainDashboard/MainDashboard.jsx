@@ -1,9 +1,20 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-
 import List from "./List"
 
-class MainDashboard extends Component {
+const StyledDashboard = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    height: 80vh;
+    margin: 75px auto 0;
+    border: solid 2px #000000;
+    border-radius: 6px;
+    background-color: #e34a23;
+    justify-content: space-evenly;
+`;
+
+export default class MainDashboard extends Component {
 
     render() {
         return (
@@ -25,16 +36,3 @@ class MainDashboard extends Component {
     }
 }
 
-export default MainDashboard;
-
-const StyledDashboard = styled.div`
-    display: flex;
-    flex-direction: row;
-    width: 90%;
-    height: 80vh;
-    margin: 75px auto 0;
-    border: solid 2px #000000;
-    border-radius: 6px;
-    background-color: #e34a23;
-    justify-content: space-evenly;
-`

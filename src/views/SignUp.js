@@ -17,6 +17,21 @@ export default class SignUp extends Component {
         error: ""
     };
 
+    componentWillMount() {
+        window.addEventListener("keypress", this.handleKeyDown)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("keypress", this.handleKeyDown);
+    }
+
+    handleKeyDown = e => {
+        const key = e.which || e.keyCode;
+        if (key === 13) { // 13 is enter
+            this.handleSubmit();
+        }
+    };
+
     handleSubmit = async () => {
         const {username, password} = this.state;
 
@@ -25,7 +40,7 @@ export default class SignUp extends Component {
         if (response.data.passwordError) {
             this.setState({error: response.data.passwordError})
         } else {
-            document.cookie = `username=${response.data.userId}`;
+            document.cookie = response.data.userId;
             this.props.history.push('/')
         }
     };
@@ -39,7 +54,8 @@ export default class SignUp extends Component {
                    onChange={e => this.setState({username: e.target.value, error: ""})}/>
             <Input value={password} placeholder="password" type="password"
                    onChange={e => this.setState({password: e.target.value, error: ""})}/>
-            <Button disabled={!username || !password} onClick={this.handleSubmit} style={{borderRadius: "0 0 5px 5px"}}>sign up</Button>
+            <Button disabled={!username || !password} onClick={this.handleSubmit} style={{borderRadius: "0 0 5px 5px"}}>sign
+                up</Button>
             <Error>{error}</Error>
             <Link to="/Login">Log In</Link>
         </div>

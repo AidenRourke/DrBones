@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import {Login, SignUp} from './views';
+import {Login, SignUp, MainDashboard} from './views';
+import {EnsureAuthentication} from './components';
 import './App.css';
 
 class App extends Component {
@@ -12,6 +13,11 @@ class App extends Component {
                         <Switch>
                             <Route path='/Login' component={Login}/>
                             <Route path='/SignUp' component={SignUp}/>
+                            <EnsureAuthentication>
+                                <Switch>
+                                    <Route path='/' component={MainDashboard}/>
+                                </Switch>
+                            </EnsureAuthentication>
                         </Switch>
                     </div>
                 </div>
