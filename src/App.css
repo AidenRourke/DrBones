@@ -4,7 +4,7 @@
 
 .MainPage {
   border-radius: 10px;
-  background-color: #ECF0F1;
+  background-color: #32CD32;
   top: 50%;
   left: 50%;
   position: absolute;
@@ -12,8 +12,4 @@
   width: 80%;
   height: 80vh;
   padding: 2vh;
-}
-
-.App-link {
-  color: #61dafb;
 }
