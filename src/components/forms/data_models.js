@@ -1,13 +1,13 @@
 export default const medicalCondition {
   title:"",
-  date:""
+  date:"",
   notes:"",
 }
 
 export default const operations{
   medicalCondition:"",
   title:"",
-  date:""
+  date:"",
   notes:"",
 }
 
@@ -17,6 +17,6 @@ export default const medication {
   date:"",
   dose:"",
   frequency: "",
-  timePeriod:""
+  timePeriod:"",
   notes:"",
 }
