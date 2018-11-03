@@ -57,11 +57,6 @@ class List extends Component {
     }
 }
 
-            // (<StyledWidget>
-
-            // </StyledWidget>)
-
-            // (this.state.displayCreateRow && (this.state.widgetType === "medication" || this.state.widgetType === "surgeries" ) && <div>New condition or nah page</div>)
 export default List;
 
 const StyledWidget = styled.div`
