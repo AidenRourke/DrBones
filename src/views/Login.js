@@ -6,8 +6,9 @@ import {Input, Button, Link} from "../components";
 
 const Error = styled.div`
   color: #ff0051;
-  padding-top: 10px;
+  padding-top: 5px;
   height: 30px;
+  padding-bottom: 10px;
 `;
 
 export default class Login extends Component {
@@ -21,7 +22,8 @@ export default class Login extends Component {
         const {username, password} = this.state;
         const response = await axios.post("https://drbones.herokuapp.com/login", {username, password});
         if (!response.data.error) {
-            document.cookie = `username=${username}`;
+            document.cookie = `username=${response.data.userId}`;
+            this.props.history.push('/')
         } else {
             this.setState({failed: true});
         }
@@ -36,7 +38,8 @@ export default class Login extends Component {
                    onChange={e => this.setState({username: e.target.value, failed: false})}/>
             <Input value={password} placeholder="password" type="password"
                    onChange={e => this.setState({password: e.target.value, failed: false})}/>
-            <Button onClick={this.handleSubmit} style={{borderRadius: "0 0 5px 5px"}}>login</Button>
+            <Button disabled={!username || !password} onClick={this.handleSubmit}
+                    style={{borderRadius: "0 0 5px 5px"}}>login</Button>
             <Error>{failed && "Invalid username or password"}</Error>
             <Link to="/SignUp">Sign Up</Link>
         </div>

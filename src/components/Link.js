@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom'
 
 const StyledLink = styled(Link)`
 	font-weight: bold;
-	display: inline-block;
 	padding: 0 16px;
 	cursor: pointer;
 	color: black;
