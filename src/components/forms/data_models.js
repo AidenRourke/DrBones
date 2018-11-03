@@ -1,28 +1,28 @@
 export const dataModels = {
 	medicalCondition: [
 		{
-			title: "",
-			date: "",
-			notes: "",
+			title: { name: "title", type: "string", display: "Title" },
+			date: {name:"date",display:"Date"},
+			notes: { name: "notes", type: "array", display: "Notes" },
 		}
 	],
 	operations: [
 		{
-			medicalCondition: "",
-			title: "",
-			date: "",
-			notes: "",
+			medicalCondition: { name: "medicalCondition", type: "string", display: "Medical Condition" },
+			title: { name: "title", type: "string", display: "Title" },
+			date:{},
+			notes: { name: "notes", type: "array", display: "Notes" },
 		}
 	],
 	medication: [
 		{
-			medicalCondition: "",
-			title: "",
+			medicalCondition: { name: "medicalCondition", type: "string", display: "Medical Condition" },
+			title: { name: "title", type: "string", display: "Title" },
 			date: "",
 			dose: "",
-			frequency: "",
+			frequency:{name:"frequency",type:"string",display:""},
 			timePeriod: "",
-			notes: "",
+			notes: { name: "notes", type: "array", display: "Notes" },
 		}
 	]
 };
