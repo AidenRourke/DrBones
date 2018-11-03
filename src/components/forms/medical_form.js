@@ -1,8 +1,6 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import * from './date_models';
+import {dataModels} from './data_models';
 
 class MedicalForm extends Component{
   constructor(props){
@@ -21,8 +19,8 @@ class MedicalForm extends Component{
   handleChange(event){
     this.setState({[event.target.name]: event.target.value});
   }
-  handleSubmit = async event =>{
-
+  handleSubmit(event){
+     axios.post()
   }
   render(){
     return(
