@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import promise from 'redux-promise';
+import reducers from './reducers';
+import SignIn from './components/login/sign_in';
+import SignUp from './components/login/sign_up';
+import EnsureLoggedIn from './components/login/ensure_logged_in';
 import './App.css';
+
+const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Provider store={createStoreWithMiddleware(reducers)}>
+     <BrowserRouter>
+     <div className ="App">
+       <div className="MainPage">
+         <Switch>
+           <Route path='/login/Login' component={SignIn} />
+           <Route path='/login/SignUp' component={SignUp} />
+         </Switch>
+       </div>
+       </div>
+     </BrowserRouter>
+   </Provider>
     );
   }
 }
