@@ -10,6 +10,7 @@ class MedicalForm extends Component{
     this.state={
       medicalCondition: "",
       date: "",
+
       optionalNotes: "",
     }
     this.handleChange = this.handleChange.bind(this);
@@ -20,7 +21,7 @@ class MedicalForm extends Component{
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit = async event =>{
-    
+
   }
   render(){
     return(
@@ -35,7 +36,7 @@ class MedicalForm extends Component{
         </label>
         <label>
           Note(Optional):
-          <input type="textField" name="note" value={this.state.value} onChange={this.handleChange} placeHolder="Optional"/>
+          <textarea value={this.state.value} onChange={this.handleChange} placeHolder="Optional"/>
         </label>
         <input type="submit" value="Submit"/>
       </form>
