@@ -11,7 +11,7 @@ class MedicalForm extends Component{
 
 
       optionalNotes: "",
-    }
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   };
@@ -35,7 +35,7 @@ class MedicalForm extends Component{
         </label>
         <label>
           Note(Optional):
-          <textarea name="optionalNotes" value={this.state.value} onChange={this.handleChange} placeHolder="Optional"/>
+          <textarea name="optionalNotes" value={this.state.value} onChange={this.handleChange} placeholder="Optional"/>
         </label>
         <input type="submit" value="Submit"/>
       </form>
