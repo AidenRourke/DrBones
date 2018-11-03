@@ -19,8 +19,8 @@ class MedicalForm extends Component{
   handleChange(event){
     this.setState({[event.target.name]: event.target.value});
   }
-  handleSubmit(event){
-
+  handleSubmit = async event =>{
+    
   }
   render(){
     return(
