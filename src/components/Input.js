@@ -7,6 +7,7 @@ const StyledInput = styled.input`
   font-size: 16px;
   width: 100%;
   box-sizing: border-box;
+  margin-bottom: 1px;
   padding: 0;
   height: 50px;
   line-height: 30px;

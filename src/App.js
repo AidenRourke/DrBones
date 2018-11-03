@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import {Login} from './views';
+import {Login, SignUp} from './views';
 import './App.css';
 
 class App extends Component {
@@ -11,6 +11,7 @@ class App extends Component {
                     <div className="MainPage">
                         <Switch>
                             <Route path='/Login' component={Login}/>
+                            <Route path='/SignUp' component={SignUp}/>
                         </Switch>
                     </div>
                 </div>
