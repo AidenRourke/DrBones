@@ -19,17 +19,19 @@ export default class Login extends Component {
     };
 
     componentWillMount() {
-        window.addEventListener("keypress", (e) => {
-            const key = e.which || e.keyCode;
-            if (key === 13) { // 13 is enter
-                this.handleSubmit();
-            }
-        });
+        window.addEventListener("keypress", this.handleKeyDown)
     }
 
-    componentWillUnmount(){
-        window.removeEventListener("keypress");
+    componentWillUnmount() {
+        window.removeEventListener("keypress", this.handleKeyDown);
     }
+
+    handleKeyDown = e => {
+        const key = e.which || e.keyCode;
+        if (key === 13) { // 13 is enter
+            this.handleSubmit();
+        }
+    };
 
     handleSubmit = async () => {
         const {username, password} = this.state;
