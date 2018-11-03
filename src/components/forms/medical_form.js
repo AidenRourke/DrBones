@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import * from './date_models';
 
 class MedicalForm extends Component{
   constructor(props){
@@ -10,6 +10,7 @@ class MedicalForm extends Component{
     this.state={
       medicalCondition: "",
       date: "",
+
 
       optionalNotes: "",
     }
@@ -28,7 +29,7 @@ class MedicalForm extends Component{
       <form onSubmit={this.handleChange}>
         <label>
           Medical Condition:
-          <input type="text" name="medicalCond" value={this.state.value} onChange={this.handleChange} />
+          <input type="text" name="medicalCondition" value={this.state.value} onChange={this.handleChange} />
         </label>
         <label>
           Date:
@@ -36,7 +37,7 @@ class MedicalForm extends Component{
         </label>
         <label>
           Note(Optional):
-          <textarea value={this.state.value} onChange={this.handleChange} placeHolder="Optional"/>
+          <textarea name="optionalNotes" value={this.state.value} onChange={this.handleChange} placeHolder="Optional"/>
         </label>
         <input type="submit" value="Submit"/>
       </form>
