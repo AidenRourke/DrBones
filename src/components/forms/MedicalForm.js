@@ -3,6 +3,7 @@ import styled from "styled-components";
 import axios from 'axios';
 import Calendar from 'react-calendar';
 
+import TextArea from '../TextArea';
 import Input from '../Input';
 import Button from '../Button';
 import {dataModels} from './data_models';
@@ -66,6 +67,15 @@ export default class MedicalForm extends Component {
                                 <Calendar onChange={date => this.setState({[field.name]: date})}
                                           value={this.state.date}/>
                             </div>
+						case "array":
+							return <div style={{textAlign: "left"}}>
+								<label>{field.display}:</label>
+								<TextArea value={this.state[field.name]}
+                                       placeholder="Optional"
+									   style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
+									   onChange={e => this.setState({[field.name]: e.target.value})}/>
+							</div>;
+
                     }
                 })
             }
