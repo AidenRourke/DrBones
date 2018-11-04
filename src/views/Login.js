@@ -36,7 +36,7 @@ export default class Login extends Component {
     handleSubmit = async () => {
         const {username, password} = this.state;
         const response = await axios.post("http://localhost:4000/login", {username, password});
-        if (!response.data.error) {
+        if (response.data.userId) {
             document.cookie = response.data.userId;
             this.props.history.push('/');
         } else {

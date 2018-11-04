@@ -2,11 +2,13 @@ import React, {Component} from 'react';
 import styled from "styled-components";
 import axios from 'axios';
 import Calendar from 'react-calendar';
+import Popover from 'react-tiny-popover';
 
 import TextArea from '../TextArea';
 import Input from '../Input';
 import Button from '../Button';
 import {dataModels} from './data_models';
+import ConditionForm from './ConditionForm';
 
 const FormContainer = styled.div`
   width: 60%;
@@ -23,16 +25,31 @@ const Buttons = styled.div`
     width: auto;
     border-radius: 20px;
   }
-`
+`;
+
+const FlatButton = styled.div`
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 3px;
+    border: 1px solid #B8C0CC;
+    padding: 5px;
+    line-height: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    &:hover {
+      background-color: #84CF96;
+    }
+`;
 
 export default class MedicalForm extends Component {
     state = {};
 
     handleSubmit = async () => {
         const {onClose} = this.props;
+        const {isPopoverOpen, ...requestBody} = this.state;
         const endpoint = this.props.data.charAt(0).toUpperCase() + this.props.data.slice(1);
         await axios.post(`http://localhost:4000/add${endpoint}`, {
-            ...this.state,
+            ...requestBody,
             userId: document.cookie
         });
         onClose();
@@ -55,11 +72,22 @@ export default class MedicalForm extends Component {
             {
                 dataModels[data].map(field => {
                     switch (field.type) {
+                        case "condition":
+                            return <Popover isOpen={this.state.isPopoverOpen}
+                                            position='bottom'
+                                            onClickOutside={() => this.setState({isPopoverOpen: false})}
+                                            content={<ConditionForm/>}>
+                                <div onClick={() => this.setState({isPopoverOpen: !this.state.isPopoverOpen})}
+                                     style={{textAlign: "left"}}>
+                                    <label>{field.display}:</label>
+                                    <FlatButton placeholder={!!this.state[field.name]}>{this.state[field.name] || field.description}</FlatButton>
+                                </div>
+                            </Popover>
                         case "string":
                             return <div style={{textAlign: "left"}}>
                                 <label>{field.display}:</label>
                                 <Input type="text" value={this.state[field.name] || ""}
-									   placeholder={field.description}
+                                       placeholder={field.description}
                                        style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
                                        onChange={e => this.setState({[field.name]: e.target.value})}/>
                             </div>;
@@ -69,15 +97,14 @@ export default class MedicalForm extends Component {
                                 <Calendar onChange={date => this.setState({[field.name]: date})}
                                           value={this.state.date}/>
                             </div>
-						case "array":
-							return <div style={{textAlign: "left"}}>
-								<label>{field.display}:</label>
-								<TextArea value={this.state[field.name]}
-                                       placeholder={field.description}
-									   style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
-									   onChange={e => this.setState({[field.name]: e.target.value})}/>
-							</div>;
-
+                        case "array":
+                            return <div style={{textAlign: "left"}}>
+                                <label>{field.display}:</label>
+                                <TextArea value={this.state[field.name]}
+                                          placeholder={field.description}
+                                          style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
+                                          onChange={e => this.setState({[field.name]: e.target.value})}/>
+                            </div>;
                     }
                 })
             }
