@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styled from "styled-components";
 import axios from 'axios';
 import Calendar from 'react-calendar';
-
+import moment from 'moment';
 import TextArea from '../TextArea';
 import Input from '../Input';
 import Button from '../Button';
@@ -27,15 +27,24 @@ const Buttons = styled.div`
 
 export default class MedicalForm extends Component {
     state = {};
+    constructor(props){
+        super(props);
+        this.handleSubmit.bind(this);
+    }
+    
 
     handleSubmit = async () => {
         const {onClose} = this.props;
         const endpoint = this.props.data.charAt(0).toUpperCase() + this.props.data.slice(1);
-        await axios.post(`http://localhost:4000/add${endpoint}`, {
-            ...this.state,
-            userId: document.cookie
+        const newDate = this.formatDate(this.state.date);
+        await this.setState({date: newDate}, ()=>{
+            axios.post(`http://localhost:4000/add${endpoint}`, {
+                ...this.state,
+                userId: document.cookie
+            });
+            onClose();
         });
-        onClose();
+       
     };
 
     checkCompletion = () => {
@@ -48,12 +57,24 @@ export default class MedicalForm extends Component {
         return completed;
     };
 
+    formatDate(dateString){
+        let m = moment(dateString, `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'`);
+        dateString = m.format('l');
+        return dateString;
+    }
+
+    onChange(date, field){
+        
+        this.setState({[field.name]: date});
+    }
+
     render() {
         const {data, onClose} = this.props;
         return <FormContainer>
             <h1>{`${this.props.title} input form`}</h1>
             {
                 dataModels[data].map(field => {
+                    // eslint-disable-next-line default-case
                     switch (field.type) {
                         case "string":
                             return <div style={{textAlign: "left"}}>
@@ -66,8 +87,8 @@ export default class MedicalForm extends Component {
                         case "date":
                             return <div style={{textAlign: "left"}}>
                                 <label>{field.display}:</label>
-                                <Calendar onChange={date => this.setState({[field.name]: date})}
-                                          value={this.state.date}/>
+                                <Calendar onChange={(date) => this.onChange(date, field)}
+                                value={this.state.date}/>
                             </div>
 						case "array":
 							return <div style={{textAlign: "left"}}>
