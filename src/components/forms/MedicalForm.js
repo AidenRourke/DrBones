@@ -122,7 +122,7 @@ export default class MedicalForm extends Component {
                                           value={this.state.date}/>
                             </div>
                         case "array":
-                            return <div style={{textAlign: "left"}}>
+                            return <div style={{textAlign: "left", color: "#008000"}}>
                                 <label>{field.display}:</label>
                                 <TextArea value={this.state[field.name]}
                                           placeholder={field.description}
