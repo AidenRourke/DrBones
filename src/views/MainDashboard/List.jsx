@@ -1,63 +1,9 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import styled from "styled-components";
 
+import Modal from "react-modal";
 import Row from "./Row";
-
-class List extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            displayNewConditionPage: false,
-            displayInfoForm: false,
-            displayInfoPage: false,
-            displayCreateRow: false,
-            widgetType: ""
-        }
-        this.createRow = this.createRow.bind(this);
-        // this.mapRows = this.mapRows.bind(this);
-    }
-
-    componentDidMount() {
-        this.setState({
-            widgetType: this.props.widgetType
-        })
-    }
-
-    createRow() {
-        this.setState({
-            displayCreateRow: true
-        })
-    }
-
-    // mapRows(list) {
-    //     let key = 0;
-    //     list.conditions.map(listItem =>(
-    //         <StyledRow key={key++}>
-    //             <span>{listItem.title}</span>
-    //             <span>{listItem.date}</span>
-    //         </StyledRow>
-    //     ))
-    // }
-
-    render() {
-        const widgetRows = (
-            <Row>Hello world</Row>
-        )
-        return (
-            <StyledWidget>
-                    <div className="title-container">
-                        <span className="title">{this.props.title}</span>
-                    </div>
-                    {widgetRows}
-                    <div className="add-btn" onClick={() => this.createRow()}>+</div>
-            </StyledWidget>
-        )
-    }
-}
-
-export default List;
+import {MedicalForm} from "../../components";
 
 const StyledWidget = styled.div`
     display: flex;
@@ -106,4 +52,58 @@ const StyledWidget = styled.div`
         box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.3);
       }
 
-`
+`;
+
+Modal.setAppElement('#root');
+
+export default class List extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            displayInfoForm: false,
+            displayInfoPage: false,
+        };
+        this.createRow = this.createRow.bind(this);
+        // this.mapRows = this.mapRows.bind(this);
+    }
+
+    componentDidMount() {
+    }
+
+    createRow() {
+        this.setState({
+            displayInfoForm: true
+        })
+    }
+
+    // mapRows(list) {
+    //     let key = 0;
+    //     list.conditions.map(listItem =>(
+    //         <StyledRow key={key++}>
+    //             <span>{listItem.title}</span>
+    //             <span>{listItem.date}</span>
+    //         </StyledRow>
+    //     ))
+    // }
+
+    render() {
+        const widgetRows = (
+            <Row>Hello world</Row>
+        );
+
+        return <StyledWidget>
+            <Modal isOpen={this.state.displayInfoForm} onRequestClose={() => this.setState({displayInfoForm: false})}>
+                <MedicalForm data={this.props.widgetType}/>
+            </Modal>
+            <div className="title-container">
+                <span className="title">{this.props.title}</span>
+            </div>
+            {widgetRows}
+            <div className="add-btn" onClick={() => this.createRow()}>+</div>
+        </StyledWidget>
+    }
+}
+
+
+
