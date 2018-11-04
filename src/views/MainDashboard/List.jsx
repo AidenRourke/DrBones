@@ -18,17 +18,20 @@ class List extends Component {
             displayInfoForm: false,
             displayInfoPage: false,
             displayCreateRow: false,
-            widgetType: ""
+            widgetType: "",
+            widgetRows: null
         }
         this.createRow = this.createRow.bind(this);
-        // this.mapRows = this.mapRows.bind(this);
+
     }
 
     componentDidMount() {
         this.setState({
             widgetType: this.props.widgetType
         });
-        this.apiCall();
+        this.apiCall(function(results){
+            this.mapRows(results);
+        });
 
     }
 
@@ -47,7 +50,7 @@ class List extends Component {
         });
 
         if (!response.data.error) {
-            console.log(response);
+            console.log(response.data.results);
         } else {
             this.setState({failed: true});
         }
@@ -60,20 +63,18 @@ class List extends Component {
         })
     }
 
-    // mapRows(list) {
-    //     let key = 0;
-    //     list.conditions.map(listItem =>(
-    //         <StyledRow key={key++}>
-    //             <span>{listItem.title}</span>
-    //             <span>{listItem.date}</span>
-    //         </StyledRow>
-    //     ))
-    // }
+    mapRows(list) {
+        let key = 0;
+        list.map(listItem =>(
+            <Row key={key++}>
+                <span>{listItem.name}</span>
+                <span>{listItem.date}</span>
+            </Row>
+        ));
+        this.setState({widgetRows : list});
+    }
 
     render() {
-        const widgetRows = (
-            <Row>Hello world</Row>
-        );
         return (
             <StyledWidget>
                 <Modal isOpen={this.state.displayInfoForm}
@@ -84,7 +85,7 @@ class List extends Component {
                 <div className="title-container">
                     <span className="title">{this.props.title}</span>
                 </div>
-                {widgetRows}
+                {this.state.widgetRows}
                 <div className="add-btn" onClick={() => this.createRow()}>+</div>
             </StyledWidget>
         )
