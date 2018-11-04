@@ -1,13 +1,13 @@
 export const dataModels = {
     medicalCondition: [
         {name: "title", type: "string", display: "Title"},
-        {name: "date", display: "Date"},
+        {name: "date", type: "date", display: "Date"},
         {name: "notes", type: "array", display: "Notes"}
     ],
     operations: [
         {name: "medicalCondition", type: "string", display: "Medical Condition"},
         {name: "title", type: "string", display: "Title"},
-        {name: "date", display: "Date"},
+        {name: "date", type: "date", display: "Date"},
         {name: "notes", type: "array", display: "Notes"}
     ],
     medication: [

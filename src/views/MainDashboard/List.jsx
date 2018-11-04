@@ -73,7 +73,7 @@ class List extends Component {
     render() {
         const widgetRows = (
             <Row>Hello world</Row>
-        )
+        );
         return (
             <StyledWidget>
                 <Modal isOpen={this.state.displayInfoForm}
