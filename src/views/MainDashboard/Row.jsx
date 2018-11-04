@@ -5,7 +5,7 @@ class Row extends Component {
 
     render() {
         return (
-            <StyledRow>
+            <StyledRow onClick={()=>this.props.onClick(this.props.context)}>
                 {this.props.children}
             </StyledRow>
         )
