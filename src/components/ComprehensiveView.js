@@ -30,7 +30,6 @@ export default class ComprehensiveView extends Component {
 
     componentWillMount(){
         this.apiCall((data) => {
-            console.log(data);
             if (this.props.context.widgetType === 'medication') {
                 this.setState({
                     medicalConditionId: data.medicalConditionId,
@@ -41,14 +40,17 @@ export default class ComprehensiveView extends Component {
                     timePeriod: data.timePeriod,
                     notes: data.notes
                 });
+                this.getAllMedicalConditions();
             }
             if (this.props.context.widgetType === 'operation') {
+                
                 this.setState({
                     medicalConditionId: data.medicalConditionId,
                     name: data.name,
                     date: data.date,
                     notes: data.notes
                 });
+                this.getAllMedicalConditions();
             }
             if (this.props.context.widgetType === 'medicalCondition') {
                 this.setState({
@@ -56,8 +58,38 @@ export default class ComprehensiveView extends Component {
                     date: data.date,
                     notes: data.notes
                 });
+                this.getPrescriptions();
             }
         });
+
+    }
+
+    async getPrescriptions() {
+        let url = 'http://localhost:4000/getAllMedications';
+
+        const response = await axios.post(url, {
+            userId: document.cookie,
+            uniqueId: this.props.context.uniqueId
+        });
+
+        let index;
+        let arr;
+        let arrOfPrescriptions = [];
+
+        if (!response.data.error) {
+            arr = response.data.results;
+            for (index in arr) {
+                console.log(arr);
+                if(arr[index].medicalConditionId === this.props.context.uniqueId){
+                    arrOfPrescriptions.push(arr[index].name);
+                }
+            };
+            console.log(arrOfPrescriptions);
+            this.setState({prescriptions: arrOfPrescriptions});
+        } else {
+            this.setState({failed: true});
+        }
+    
     }
 
     async apiCall(callback) {
@@ -88,8 +120,15 @@ export default class ComprehensiveView extends Component {
         const response = await axios.post('http://localhost:4000/getAllMedicalConditions', {
             userId: document.cookie
         });
-        this.setState({conditions: response.data.results});
-        console.log(response.data.results);
+        let arr = response.data.results;
+        let condition;
+        let medicalConditionString;
+        for (condition in arr) {
+            if(arr[condition].uniqueId === this.state.medicalConditionId){
+                medicalConditionString = arr[condition].name;
+            }
+        };
+        this.setState({condition: response.data.results, medicalConditionString: medicalConditionString});
     }
 
     render() {
@@ -99,12 +138,16 @@ export default class ComprehensiveView extends Component {
                 <ViewContainer>
                     <h1>{`${this.state.name}`}</h1>
                     <div className={'line'}>
+                        <h1>{`To Treat: `}</h1>
+                        <h1>{`${this.state.medicalConditionString}`}</h1>
+                    </div>
+                    <div className={'line'}>
                         <h1>{`Date:`}</h1>
                         <h1>{`${this.state.date}`}</h1>
                     </div>
                     <div className={'line'}>
                         <h1>{`Dose:`}</h1>
-                        <h1>{`${this.state.Dose}`}</h1>
+                        <h1>{`${this.state.dose}`}</h1>
                     </div>
                     <div className={'line'}>
                         <h1>{`Frequency:`}</h1>
@@ -126,7 +169,7 @@ export default class ComprehensiveView extends Component {
                     <h1>{`${this.state.name}`}</h1>
                     <div className={'line'}>
                         <h1>{`To Treat: `}</h1>
-                        <h1>{`${this.state.conditions.name}`}</h1>
+                        <h1>{`${this.state.medicalConditionString}`}</h1>
                     </div>
                     <div className={'line'}>
                         <h1>{`Date:`}</h1>
@@ -149,6 +192,10 @@ export default class ComprehensiveView extends Component {
                     <div className={'line'}>
                         <h1>{`Notes:`}</h1>
                         <h1>{`${this.state.notes ? this.state.notes : 'No notes recorded!'} `}</h1>
+                    </div>
+                    <div className={'line'}>
+                        <h1>{`Prescribed Medications:`}</h1>
+                        <h1>{`${this.state.prescriptions ? this.state.prescriptions : 'No prescribed medications!'} `}</h1>
                     </div>
                 </ViewContainer>
             );
