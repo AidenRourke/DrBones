@@ -31,7 +31,7 @@ export default class MedicalForm extends Component {
     handleSubmit = async () => {
         const {onClose} = this.props;
         const endpoint = this.props.data.charAt(0).toUpperCase() + this.props.data.slice(1);
-        await axios.post(`https://drbones.herokuapp.com/add${endpoint}`, {
+        await axios.post(`http://localhost:4000/add${endpoint}`, {
             ...this.state,
             userId: document.cookie
         });
@@ -59,7 +59,10 @@ export default class MedicalForm extends Component {
                             return <div style={{textAlign: "left"}}>
                                 <label>{field.display}:</label>
                                 <Input type="text" value={this.state[field.name] || ""}
+<<<<<<< HEAD
 									   placeholder={field.description}
+=======
+>>>>>>> ad401715d7ae4f32eaa9aedc16c1692929f442de
                                        style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
                                        onChange={e => this.setState({[field.name]: e.target.value})}/>
                             </div>;
@@ -73,7 +76,11 @@ export default class MedicalForm extends Component {
 							return <div style={{textAlign: "left"}}>
 								<label>{field.display}:</label>
 								<TextArea value={this.state[field.name]}
+<<<<<<< HEAD
                                        placeholder={field.description}
+=======
+                                       placeholder="Optional"
+>>>>>>> ad401715d7ae4f32eaa9aedc16c1692929f442de
 									   style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
 									   onChange={e => this.setState({[field.name]: e.target.value})}/>
 							</div>;

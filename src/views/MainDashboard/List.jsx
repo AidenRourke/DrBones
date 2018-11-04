@@ -14,22 +14,16 @@ class List extends Component {
         super(props);
 
         this.state = {
-            displayNewConditionPage: false,
             displayInfoForm: false,
             displayInfoPage: false,
-            displayCreateRow: false,
-            widgetType: "",
             widgetRows: null
-        }
+        };
         this.createRow = this.createRow.bind(this);
         this.apiCall = this.apiCall.bind(this);
 
     }
 
     componentDidMount() {
-        this.setState({
-            widgetType: this.props.widgetType
-        });
         this.apiCall((results) => {
             this.mapRows(results);
         });
@@ -37,13 +31,13 @@ class List extends Component {
     }
 
     async apiCall(callback) {
-        let url, data;
-        if (this.state.widgetType === 'medication') {
-            url = 'https://drbones.herokuapp.com/getAllMedications';
-        } else if (this.state.widgetType === 'operations') {
-            url = 'https://drbones.herokuapp.com/getAllOperations';
+        let url;
+        if (this.props.widgetType === 'medication') {
+            url = 'http://localhost:4000/getAllMedications';
+        } else if (this.props.widgetType === 'operations') {
+            url = 'http://localhost:4000/getAllOperations';
         } else {
-            url = 'https://drbones.herokuapp.com/getAllMedicalConditions';
+            url = 'http://localhost:4000/getAllMedicalConditions';
         }
 
         const response = await axios.post(url, {
@@ -75,8 +69,9 @@ class List extends Component {
                     <span>{list.results[row].date}</span>
                 </Row>
             );
-        };
-        this.setState({widgetRows : listOfWidgets});
+        }
+        ;
+        this.setState({widgetRows: listOfWidgets});
     }
 
     render() {

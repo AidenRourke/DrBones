@@ -35,7 +35,7 @@ export default class Login extends Component {
 
     handleSubmit = async () => {
         const {username, password} = this.state;
-        const response = await axios.post("https://drbones.herokuapp.com/login", {username, password});
+        const response = await axios.post("http://localhost:4000/login", {username, password});
         if (!response.data.error) {
             document.cookie = response.data.userId;
             this.props.history.push('/');
