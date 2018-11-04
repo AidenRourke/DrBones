@@ -14,12 +14,10 @@ class List extends Component {
         super(props);
 
         this.state = {
-            displayNewConditionPage: false,
             displayInfoForm: false,
             displayInfoPage: false,
-            displayCreateRow: false,
             widgetRows: null
-        }
+        };
         this.createRow = this.createRow.bind(this);
         this.apiCall = this.apiCall.bind(this);
 
