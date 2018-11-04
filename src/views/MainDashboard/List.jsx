@@ -34,9 +34,11 @@ class List extends Component {
         let url;
         if (this.props.widgetType === 'medication') {
             url = 'http://localhost:4000/getAllMedications';
-        } else if (this.props.widgetType === 'operations') {
+        }
+        if (this.props.widgetType === 'operation') {
             url = 'http://localhost:4000/getAllOperations';
-        } else {
+        }
+        if (this.props.widgetType === 'medicalCondition') {
             url = 'http://localhost:4000/getAllMedicalConditions';
         }
 

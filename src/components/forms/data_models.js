@@ -4,7 +4,7 @@ export const dataModels = {
         {name: "date", type: "date", display: "Date", required: true},
         {name: "notes", type: "array", display: "Notes",description:"Optional."}
     ],
-    operations: [
+    operation: [
         {name: "medicalConditionId", type: "string", display: "Medical Condition",description:"Enter the name of the medical condition", required: true},
         {name: "name", type: "string", display: "Title",description:"Enter the name of the operation", required: true},
         {name: "date", type: "date", display: "Date", required: true},
