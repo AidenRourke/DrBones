@@ -154,8 +154,7 @@ class List extends Component {
         window.location.reload()
     }
 
-    onEdit(formData) {
-        console.log(formData)
+    onEdit() {
         this.setState({
             displayInfoPage: false,
             displayInfoForm: true,
