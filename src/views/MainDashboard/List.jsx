@@ -14,35 +14,30 @@ class List extends Component {
         super(props);
 
         this.state = {
-            displayNewConditionPage: false,
             displayInfoForm: false,
             displayInfoPage: false,
-            displayCreateRow: false,
-            widgetType: "",
             widgetRows: null
-        }
+        };
         this.createRow = this.createRow.bind(this);
+        this.apiCall = this.apiCall.bind(this);
 
     }
 
     componentDidMount() {
-        this.setState({
-            widgetType: this.props.widgetType
-        });
-        this.apiCall(function(results){
+        this.apiCall((results) => {
             this.mapRows(results);
         });
 
     }
 
-    async apiCall() {
-        let url, data;
-        if (this.state.widgetType === 'medication') {
-            url = 'https://drbones.herokuapp.com/getAllMedications';
-        } else if (this.state.widgetType === 'surgeries') {
-            url = 'https://drbones.herokuapp.com/getAllOperations';
+    async apiCall(callback) {
+        let url;
+        if (this.props.widgetType === 'medication') {
+            url = 'http://localhost:4000/getAllMedications';
+        } else if (this.props.widgetType === 'operations') {
+            url = 'http://localhost:4000/getAllOperations';
         } else {
-            url = 'https://drbones.herokuapp.com/getAllMedicalConditions';
+            url = 'http://localhost:4000/getAllMedicalConditions';
         }
 
         const response = await axios.post(url, {
@@ -50,7 +45,7 @@ class List extends Component {
         });
 
         if (!response.data.error) {
-            console.log(response.data.results);
+            callback(response.data);
         } else {
             this.setState({failed: true});
         }
@@ -65,13 +60,18 @@ class List extends Component {
 
     mapRows(list) {
         let key = 0;
-        list.map(listItem =>(
-            <Row key={key++}>
-                <span>{listItem.name}</span>
-                <span>{listItem.date}</span>
-            </Row>
-        ));
-        this.setState({widgetRows : list});
+        let listOfWidgets = [];
+        let row;
+        for (row in list.results) {
+            listOfWidgets.push(
+                <Row key={key++}>
+                    <span>{list.results[row].name}</span>
+                    <span>{list.results[row].date}</span>
+                </Row>
+            );
+        }
+        ;
+        this.setState({widgetRows: listOfWidgets});
     }
 
     render() {

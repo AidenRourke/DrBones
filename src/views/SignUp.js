@@ -35,7 +35,7 @@ export default class SignUp extends Component {
     handleSubmit = async () => {
         const {username, password} = this.state;
 
-        const response = await axios.post("https://drbones.herokuapp.com/signUp", {username, password});
+        const response = await axios.post("http://localhost:4000/signup", {username, password});
 
         if (response.data.passwordError) {
             this.setState({error: response.data.passwordError})
