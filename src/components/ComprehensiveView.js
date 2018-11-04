@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import styled from "styled-components";
 import axios from 'axios';
+import EditIcon from "./EditIcon";
+import {formatDate} from "../../src/utils/utils";
 
 const ViewContainer = styled.div`
   width: 60%;
   margin: auto;
   text-align: center;
   text-overline-color: #008000;
-  color:green
+  color:green;
 
   .line {
       display: flex;
@@ -43,7 +45,7 @@ export default class ComprehensiveView extends Component {
                 this.getAllMedicalConditions();
             }
             if (this.props.context.widgetType === 'operation') {
-                
+
                 this.setState({
                     medicalConditionId: data.medicalConditionId,
                     name: data.name,
@@ -79,17 +81,15 @@ export default class ComprehensiveView extends Component {
         if (!response.data.error) {
             arr = response.data.results;
             for (index in arr) {
-                console.log(arr);
                 if(arr[index].medicalConditionId === this.props.context.uniqueId){
                     arrOfPrescriptions.push(arr[index].name);
                 }
             };
-            console.log(arrOfPrescriptions);
             this.setState({prescriptions: arrOfPrescriptions});
         } else {
             this.setState({failed: true});
         }
-    
+
     }
 
     async apiCall(callback) {
@@ -132,10 +132,12 @@ export default class ComprehensiveView extends Component {
     }
 
     render() {
+        const {onEdit} = this.props;
         let jsx;
         if (this.props.context.widgetType === 'medication') {
             jsx = (
                 <ViewContainer>
+                    <EditIcon onClick={() => onEdit(this.state)}/>
                     <h1>{`${this.state.name}`}</h1>
                     <div className={'line'}>
                         <h1>{`To Treat: `}</h1>
@@ -143,7 +145,7 @@ export default class ComprehensiveView extends Component {
                     </div>
                     <div className={'line'}>
                         <h1>{`Date:`}</h1>
-                        <h1>{`${this.state.date}`}</h1>
+                        <h1>{`${formatDate(this.state.date)}`}</h1>
                     </div>
                     <div className={'line'}>
                         <h1>{`Dose:`}</h1>
@@ -166,6 +168,7 @@ export default class ComprehensiveView extends Component {
         } else if (this.props.context.widgetType === 'operation') {
             jsx = (
                 <ViewContainer>
+                    <EditIcon onClick={() => onEdit(this.state)}/>
                     <h1>{`${this.state.name}`}</h1>
                     <div className={'line'}>
                         <h1>{`To Treat: `}</h1>
@@ -173,7 +176,7 @@ export default class ComprehensiveView extends Component {
                     </div>
                     <div className={'line'}>
                         <h1>{`Date:`}</h1>
-                        <h1>{`${this.state.date}`}</h1>
+                        <h1>{`${formatDate(this.state.date)}`}</h1>
                     </div>
                     <div className={'line'}>
                         <h1>{`Notes:`}</h1>
@@ -184,10 +187,11 @@ export default class ComprehensiveView extends Component {
         } else if (this.props.context.widgetType === 'medicalCondition') {
             jsx = (
                 <ViewContainer>
+                    <EditIcon onClick={() => onEdit(this.state)}/>
                     <h1>{`${this.state.name}`}</h1>
                     <div className={'line'}>
                         <h1>{`Date:`}</h1>
-                        <h1>{`${this.state.date}`}</h1>
+                        <h1>{`${formatDate(this.state.date)}`}</h1>
                     </div>
                     <div className={'line'}>
                         <h1>{`Notes:`}</h1>

@@ -6,7 +6,7 @@ import Input from "../Input";
 import Calendar from "react-calendar";
 import TextArea from "../TextArea";
 import Button from "../Button";
-import moment from "moment";
+import {formatDate} from "../../utils/utils";
 
 const Form = styled.div`
   background-color: white;
@@ -59,9 +59,8 @@ export default class ConditionForm extends Component {
     handleSubmit = async () => {
         const {notes, date, name} = this.state;
         const {onSubmit} = this.props;
-
         const requestBody = {
-            date: this.formatDate(date),
+            date,
             userId: document.cookie,
             notes,
             name
@@ -77,12 +76,6 @@ export default class ConditionForm extends Component {
         })
     };
 
-    formatDate(dateString) {
-        let m = moment(dateString, `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'`);
-        dateString = m.format('l');
-        return dateString;
-    }
-
     toggleForm = e => {
         e.stopPropagation();
         this.setState({newCondition: !this.state.newCondition})
@@ -96,7 +89,7 @@ export default class ConditionForm extends Component {
                 <div>
                     <Item onClick={this.toggleForm}>New Condition</Item>
                     {this.state.conditions.map(condition => <Item
-                        onClick={() => onSubmit(condition)}>{`${condition.name} ${condition.date}`}</Item>)}
+                        onClick={() => onSubmit(condition)}>{`${condition.name} ${formatDate(condition.date)}`}</Item>)}
                 </div>
                 :
                 <div style={{margin: 20}}>
