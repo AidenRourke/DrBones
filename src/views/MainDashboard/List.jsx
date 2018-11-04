@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-
+import axios from "axios";
 import Row from "./Row";
 
 class List extends Component {
@@ -22,7 +22,31 @@ class List extends Component {
     componentDidMount() {
         this.setState({
             widgetType: this.props.widgetType
-        })
+        });
+        this.apiCall();
+        
+    }
+
+    async apiCall(){
+        let url, data;
+        if(this.state.widgetType === 'medication') {
+            url = 'https://drbones.herokuapp.com/getAllMedications';
+        } else if (this.state.widgetType === 'surgeries') {
+            url = 'https://drbones.herokuapp.com/getAllOperations';
+        } else {
+            url = 'https://drbones.herokuapp.com/getAllMedicalConditions';
+        }
+
+        const response = await axios.post(url, {
+            userId: document.cookie
+        });
+
+        if (!response.data.error) {
+            console.log(response);
+        } else {
+            this.setState({failed: true});
+        }
+        
     }
 
     createRow() {
