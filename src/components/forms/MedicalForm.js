@@ -7,7 +7,9 @@ import Input from '../Input';
 import {dataModels} from './data_models';
 
 const FormContainer = styled.div`
-    text-align: center;
+  width: 60%;
+  margin: auto;
+  text-align: center;
 `;
 
 export default class MedicalForm extends Component {
@@ -26,18 +28,20 @@ export default class MedicalForm extends Component {
             <h1>{`${this.props.title} input form`}</h1>
             {
                 dataModels[data].map(field => {
-                    if (field.type === "string") {
-                        return <label>
-                            {field.display}
-                            <Input type="text" value={this.state[field.name]}
-                                   onChange={e => this.setState({[field.name]: e.target.value})}/>
-                        </label>
+                    switch (field.type) {
+                        case "string":
+                            return <div style={{textAlign: "left"}}>
+                                <label>{field.display}:</label>
+                                <Input type="text" value={this.state[field.name]}
+                                       style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
+                                       onChange={e => this.setState({[field.name]: e.target.value})}/>
+                            </div>;
+                        case "date":
+                            return <div style={{textAlign: "left"}}>
+                                <label>{field.display}:</label>
+                                <Calendar onChange={this.onChange} value={this.state.date}/>
+                            </div>
                     }
-                    // else if (field.type === "array") {
-                    //     return <textarea value={field.name} onChange={e => this.setState({[field.name]: e.target.value})}/>
-                    // } else if (field.type === "date") {
-                    //     return <Calendar onChange={this.onChange} value={this.state.date}/>
-                    // }
                 })
             }
         </FormContainer>;
