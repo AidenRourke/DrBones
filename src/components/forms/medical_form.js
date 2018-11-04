@@ -1,46 +1,38 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {dataModels} from './data_models';
+import Input from '../Input';
+import Calendar from 'react-calendar';
+import { dataModels } from './data_models';
 
-class MedicalForm extends Component{
-  constructor(props){
-    super(props);
-    this.state={
-      medicalCondition: "",
-      date: "",
+export default class MedicalForm extends Component {
+	state = {
+		date: new Date(),
+	};
+
+	handleSubmit = async ( event ) => {
+		const {} = this.state;
+		await axios.post( "https://drbones.herokuapp.com/", {} )
+	};
+
+	onChange = date => this.setState( { date } );
 
 
-      optionalNotes: "",
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  };
-
-  handleChange(event){
-    this.setState({[event.target.name]: event.target.value});
-  }
-  handleSubmit(event){
-     axios.post()
-  }
-  render(){
-    return(
-      <form onSubmit={this.handleChange}>
-        <label>
-          Medical Condition:
-          <input type="text" name="medicalCondition" value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <label>
-          Date:
-          <input type="text" name="date" value={this.state.value} onChange={this.handleChange}/>
-        </label>
-        <label>
-          Note(Optional):
-          <textarea name="optionalNotes" value={this.state.value} onChange={this.handleChange} placeholder="Optional"/>
-        </label>
-        <input type="submit" value="Submit"/>
-      </form>
-    );
-  }
+	render(){
+		return (
+			Object.keys( this.props.dataModels ).map( field => {
+				if( field.type === "string" ){
+					return <label>
+						{field.display}
+						<Input type="text" value={field.name} onChange={e => this.setState({[field.name]: e.target.value})}  />
+					</label>
+				}
+				else if( field.type === "array" ){
+					return <textarea value={field.name} onChange={e => this.setState({[field.name]: e.target.value})}/>
+				} else {
+					return <Calendar onChange={this.onChange} value={this.state.date}/>
+				}
+			} )
+		);
+	}
 }
 
-export default MedicalForm;
