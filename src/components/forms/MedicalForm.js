@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import styled from "styled-components";
 import axios from 'axios';
 import Calendar from 'react-calendar';
-import moment from 'moment';
 import Popover from "react-tiny-popover";
 
 import TextArea from '../TextArea';
@@ -53,11 +52,10 @@ export default class MedicalForm extends Component {
     }
 
     handleSubmit = async () => {
-        const {onClose} = this.props;
-        const {isPopoverOpen, date, medicalConditionId, ...data} = this.state;
+        const {onSave} = this.props;
+        const {isPopoverOpen, medicalConditionId, ...data} = this.state;
 
         const requestBody = {
-            date: this.formatDate(date),
             userId: document.cookie,
             ...data
         };
@@ -70,7 +68,7 @@ export default class MedicalForm extends Component {
         await axios.post(`http://localhost:4000/add${endpoint}`, {
             ...requestBody
         });
-        onClose();
+        onSave();
     };
 
     checkCompletion = () => {
@@ -82,18 +80,6 @@ export default class MedicalForm extends Component {
         });
         return completed;
     };
-
-    formatDate(dateString) {
-        let m = moment(dateString, `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'`);
-        dateString = m.format('l');
-        return dateString;
-    }
-
-    reverseString(dateString){
-        let m = moment(dateString, 'l');
-        dateString = m.format(`yyyy-MM-dd HH:mm:ss.SSS'Z'`);
-        return dateString;
-    }
 
     render() {
         const {data, onClose} = this.props;

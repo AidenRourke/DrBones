@@ -16,7 +16,7 @@ export const dataModels = {
         {name: "date", type: "date", display: "Date", required: true},
         {name: "dose", type: "string", display: "Dose",description:"Enter the dosage given", required: true},
         {name: "frequency", type: "string", display: "Frequency",description:"Enter how often the medication was taken (ex. once a day)", required: true},
-        {name: "timePeriod", type: "string", display: "Time Period",description:"Enter the time period the medication was taken (ex. 2 weeks)", required: true},
+        {name: "timePeriod", type: "string", display: "Time Period",description:"The time period the medication was taken (ex. 2 weeks)", required: true},
         {name: "notes", type: "array", display: "Notes"}
     ]
 
