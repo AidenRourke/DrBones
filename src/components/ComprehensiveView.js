@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styled from "styled-components";
 import axios from 'axios';
+import Button from "./Button";
 
 const ViewContainer = styled.div`
   width: 60%;
@@ -162,6 +163,7 @@ export default class ComprehensiveView extends Component {
 
     render() {
         let jsx;
+        const {onClose} = this.props
         if (this.props.context.widgetType === 'medication') {
             jsx = (
                 <ViewContainer>
@@ -190,6 +192,7 @@ export default class ComprehensiveView extends Component {
                         <h1>{`Notes:`}</h1>
                         <h1>{`${this.state.notes}`}</h1>
                     </div>
+					<Button muted onClick={onClose}>Back</Button>
                 </ViewContainer>
             );
         } else if (this.props.context.widgetType === 'operation') {
@@ -208,6 +211,7 @@ export default class ComprehensiveView extends Component {
                         <h1>{`Notes:`}</h1>
                         <h1>{`${this.state.notes ? this.state.notes : 'No notes recorded!'} `}</h1>
                     </div>
+					<Button muted onClick={onClose}>Back</Button>
                 </ViewContainer>
             );
         } else if (this.props.context.widgetType === 'medicalCondition') {
@@ -230,6 +234,7 @@ export default class ComprehensiveView extends Component {
                         <h1>{`Operations Done:`}</h1>
                         <h1>{`${this.state.operations && this.state.operations.length !== 0 ? this.state.operations: 'No operations done!'} `}</h1>
                     </div>
+                    <Button muted onClick={onClose}>Back</Button>
                 </ViewContainer>
             );
         } else {
