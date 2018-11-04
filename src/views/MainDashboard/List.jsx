@@ -67,13 +67,20 @@ class List extends Component {
         for (row in list.results) {
             listOfWidgets.push(
                 <Row key={key++}>
-                    <span>{list.results[row].name}</span>
-                    <span>{list.results[row].date}</span>
+                    <span className="left">{list.results[row].name}</span>
+                    <span className="right">{list.results[row].date}</span>
                 </Row>
             );
         }
         ;
         this.setState({widgetRows: listOfWidgets});
+    }
+
+    onClose(){
+        this.setState({displayInfoForm: false});
+        this.apiCall((results) => {
+            this.mapRows(results);
+        });
     }
 
     render() {
@@ -82,7 +89,7 @@ class List extends Component {
                 <Modal isOpen={this.state.displayInfoForm}
                        onRequestClose={() => this.setState({displayInfoForm: false})}>
                     <MedicalForm data={this.props.widgetType} title={this.props.title}
-                                 onClose={() => this.setState({displayInfoForm: false})}/>
+                                 onClose={()=>this.onClose()}/>
                 </Modal>
                 <div className="title-container">
                     <span className="title">{this.props.title}</span>
@@ -108,7 +115,14 @@ const StyledWidget = styled.div`
     border-radius: 20px;
     line-height: 40px;
 
-
+    .left {
+        display: block;
+        float: left;
+    }
+    .right {
+        display: block;
+        float: right;
+    }
     .title-container {
         width: 100%;
         height: 5%;
