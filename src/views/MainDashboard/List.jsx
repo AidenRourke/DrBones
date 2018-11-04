@@ -71,8 +71,7 @@ class List extends Component {
                     <span className="right">{list.results[row].date}</span>
                 </Row>
             );
-        }
-        ;
+        };
         this.setState({widgetRows: listOfWidgets});
     }
 
