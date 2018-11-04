@@ -33,11 +33,11 @@ class List extends Component {
     async apiCall(callback) {
         let url;
         if (this.props.widgetType === 'medication') {
-            url = 'https://drbones.herokuapp.com/getAllMedications';
+            url = 'http://localhost:4000/getAllMedications';
         } else if (this.props.widgetType === 'operations') {
-            url = 'https://drbones.herokuapp.com/getAllOperations';
+            url = 'http://localhost:4000/getAllOperations';
         } else {
-            url = 'https://drbones.herokuapp.com/getAllMedicalConditions';
+            url = 'http://localhost:4000/getAllMedicalConditions';
         }
 
         const response = await axios.post(url, {

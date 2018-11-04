@@ -30,7 +30,7 @@ export default class MedicalForm extends Component {
     handleSubmit = async () => {
         const {onClose} = this.props;
         const endpoint = this.props.data.charAt(0).toUpperCase() + this.props.data.slice(1);
-        await axios.post(`https://drbones.herokuapp.com/add${endpoint}`, {
+        await axios.post(`http://localhost:4000/add${endpoint}`, {
             ...this.state,
             userId: document.cookie
         });
