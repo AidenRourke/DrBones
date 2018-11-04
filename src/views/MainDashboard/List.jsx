@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import axios from "axios";
 import Row from "./Row";
 import {MedicalForm} from "../../components";
+import {ComprehensiveView} from "../../components";
 
 Modal.setAppElement('#root');
 
@@ -16,7 +17,8 @@ class List extends Component {
         this.state = {
             displayInfoForm: false,
             displayInfoPage: false,
-            widgetRows: null
+            widgetRows: null,
+            context: null
         };
         this.createRow = this.createRow.bind(this);
         this.apiCall = this.apiCall.bind(this);
@@ -60,13 +62,24 @@ class List extends Component {
         })
     }
 
+    onClickRow(context){
+        this.setState({
+            displayInfoPage: true,
+            context: context
+        });
+    }
+
     mapRows(list) {
         let key = 0;
         let listOfWidgets = [];
         let row;
         for (row in list.results) {
+            let context = {
+                uniqueId: list.results[row].uniqueId, 
+                widgetType: this.props.widgetType
+            }
             listOfWidgets.push(
-                <Row key={key++}>
+                <Row key={key++} context={context} onClick={this.onClickRow.bind(this)}>
                     <span className="left">{list.results[row].name}</span>
                     <span className="right">{list.results[row].date}</span>
                 </Row>
@@ -88,6 +101,11 @@ class List extends Component {
                 <Modal isOpen={this.state.displayInfoForm}
                        onRequestClose={() => this.setState({displayInfoForm: false})}>
                     <MedicalForm data={this.props.widgetType} title={this.props.title}
+                                 onClose={()=>this.onClose()}/>
+                </Modal>
+                <Modal isOpen={this.state.displayInfoPage}
+                       onRequestClose={() => this.setState({displayInfoPage: false})}>
+                    <ComprehensiveView data={this.props.widgetType} context={this.state.context} title={this.props.title}
                                  onClose={()=>this.onClose()}/>
                 </Modal>
                 <div className="title-container">
