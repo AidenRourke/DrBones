@@ -50,7 +50,6 @@ class List extends Component {
                     <div className="title-container">
                         <span className="title">{this.props.title}</span>
                     </div>
-                    
                     {widgetRows}
                     <div className="add-btn" onClick={() => this.createRow()}>+</div>
             </StyledWidget>
@@ -70,7 +69,6 @@ const StyledWidget = styled.div`
     margin: auto;
     align-text: center;
     border-radius: 20px;
-    font-family: 'Raleway', sans-serif;
     line-height: 40px;
 
 
