@@ -3,12 +3,13 @@ import styled from "styled-components";
 
 const ButtonContainer = styled.button`
   height: 50px;
-  border: ${props => props.disabled ? "black" : "none"};
+  border: 1px solid ${props => props.disabled ? "#B8C0CC" : "none"};
   font-weight: bold;
   font-size: 16px;
   width: 100%;
-  background-color: ${props => props.disabled ? "#B8C0CC" : "#009A31"};
-  color: white;
+  background-color: ${props => props.disabled ? "white" : "#009A31"};
+  background-color: ${props => props.muted && "#B8C0CC"};
+  color: ${props => props.disabled ? "#B8C0CC" : "white"};
   cursor: pointer; 
   box-sizing: border-box;
 `;

@@ -1,7 +1,12 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import styled from "styled-components";
 
+import Modal from "react-modal";
+import axios from "axios";
 import Row from "./Row";
+import {MedicalForm} from "../../components";
+
+Modal.setAppElement('#root');
 
 class List extends Component {
 
@@ -13,45 +18,75 @@ class List extends Component {
             displayInfoForm: false,
             displayInfoPage: false,
             displayCreateRow: false,
-            widgetType: ""
+            widgetType: "",
+            widgetRows: null
         }
         this.createRow = this.createRow.bind(this);
-        // this.mapRows = this.mapRows.bind(this);
+
     }
 
     componentDidMount() {
         this.setState({
             widgetType: this.props.widgetType
-        })
+        });
+        this.apiCall(function(results){
+            this.mapRows(results);
+        });
+
+    }
+
+    async apiCall() {
+        let url, data;
+        if (this.state.widgetType === 'medication') {
+            url = 'https://drbones.herokuapp.com/getAllMedications';
+        } else if (this.state.widgetType === 'surgeries') {
+            url = 'https://drbones.herokuapp.com/getAllOperations';
+        } else {
+            url = 'https://drbones.herokuapp.com/getAllMedicalConditions';
+        }
+
+        const response = await axios.post(url, {
+            userId: document.cookie
+        });
+
+        if (!response.data.error) {
+            console.log(response.data.results);
+        } else {
+            this.setState({failed: true});
+        }
+
     }
 
     createRow() {
         this.setState({
-            displayCreateRow: true
+            displayInfoForm: true
         })
     }
 
-    // mapRows(list) {
-    //     let key = 0;
-    //     list.conditions.map(listItem =>(
-    //         <StyledRow key={key++}>
-    //             <span>{listItem.title}</span>
-    //             <span>{listItem.date}</span>
-    //         </StyledRow>
-    //     ))
-    // }
+    mapRows(list) {
+        let key = 0;
+        list.map(listItem =>(
+            <Row key={key++}>
+                <span>{listItem.name}</span>
+                <span>{listItem.date}</span>
+            </Row>
+        ));
+        this.setState({widgetRows : list});
+    }
 
     render() {
-        const widgetRows = (
-            <Row>Hello world</Row>
-        )
         return (
             <StyledWidget>
-                    <div className="title-container">
-                        <span className="title">{this.props.title}</span>
-                    </div>
-                    {widgetRows}
-                    <div className="add-btn" onClick={() => this.createRow()}>+</div>
+                <Modal isOpen={this.state.displayInfoForm}
+                       onRequestClose={() => this.setState({displayInfoForm: false})}>
+                    <MedicalForm data={this.props.widgetType} title={this.props.title}
+                                 onClose={() => this.setState({displayInfoForm: false})}/>
+                </Modal>
+                <div className="title-container">
+                    <span className="title">{this.props.title}</span>
+                </div>
+                {this.state.widgetRows}
+                <div className="add-btn" onClick={() => this.createRow()}>+</div>
             </StyledWidget>
         )
     }

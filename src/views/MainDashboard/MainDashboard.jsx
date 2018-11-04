@@ -23,11 +23,11 @@ export default class MainDashboard extends Component {
                 />
                 <List 
                     title="Surgeries and Operations"
-                    widgetType="surgeries"
+                    widgetType="operations"
                 />
                 <List 
                     title="Medical Conditions"
-                    widgetType="conditions"
+                    widgetType="medicalCondition"
                 />
             </StyledDashboard>
         )
