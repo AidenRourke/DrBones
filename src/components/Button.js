@@ -7,7 +7,7 @@ const ButtonContainer = styled.button`
   font-weight: bold;
   font-size: 16px;
   width: 100%;
-  background-color: ${props => props.disabled ? "#B8C0CC" : "#009A31"};
+  background-color: ${props => (props.disabled || props.muted) ? "#B8C0CC" : "#009A31"};
   color: white;
   cursor: pointer; 
   box-sizing: border-box;

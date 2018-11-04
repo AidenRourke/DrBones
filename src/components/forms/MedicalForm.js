@@ -4,6 +4,7 @@ import axios from 'axios';
 import Calendar from 'react-calendar';
 
 import Input from '../Input';
+import Button from '../Button';
 import {dataModels} from './data_models';
 
 const FormContainer = styled.div`
@@ -12,18 +13,29 @@ const FormContainer = styled.div`
   text-align: center;
 `;
 
+const Buttons = styled.div`
+  button {
+    padding: 0 20px;
+    margin: 10px;
+    display: inline-block;
+    width: auto;
+    border-radius: 20px;
+  }
+`
+
 export default class MedicalForm extends Component {
     state = {};
 
-    handleSubmit = async (event) => {
-        console.log("submitted")
-        // await axios.post("https://drbones.herokuapp.com/", {})
+    handleSubmit = async () => {
+        const endpoint = this.props.data.charAt(0).toUpperCase() + this.props.data.slice(1);
+        await axios.post(`https://drbones.herokuapp.com/add${endpoint}`, {
+            ...this.state,
+            userId: document.cookie
+        })
     };
 
-    onChange = date => this.setState({date});
-
     render() {
-        const {data} = this.props;
+        const {data, onClose} = this.props;
         return <FormContainer>
             <h1>{`${this.props.title} input form`}</h1>
             {
@@ -39,11 +51,16 @@ export default class MedicalForm extends Component {
                         case "date":
                             return <div style={{textAlign: "left"}}>
                                 <label>{field.display}:</label>
-                                <Calendar onChange={this.onChange} value={this.state.date}/>
+                                <Calendar onChange={date => this.setState({[field.name]: date})}
+                                          value={this.state.date}/>
                             </div>
                     }
                 })
             }
+            <Buttons>
+                <Button onClick={this.handleSubmit}>Submit</Button>
+                <Button muted onClick={onClose}>Cancel</Button>
+            </Buttons>
         </FormContainer>;
     }
 }
