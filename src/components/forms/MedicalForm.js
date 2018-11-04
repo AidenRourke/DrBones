@@ -3,10 +3,13 @@ import styled from "styled-components";
 import axios from 'axios';
 import Calendar from 'react-calendar';
 import moment from 'moment';
+import Popover from "react-tiny-popover";
+
 import TextArea from '../TextArea';
 import Input from '../Input';
 import Button from '../Button';
 import {dataModels} from './data_models';
+import ConditionForm from './ConditionForm';
 
 const FormContainer = styled.div`
   width: 60%;
@@ -50,9 +53,10 @@ export default class MedicalForm extends Component {
 
     handleSubmit = async () => {
         const {onClose} = this.props;
-        const {isPopoverOpen, ...requestBody} = this.state;
+        const {isPopoverOpen, date, ...requestBody} = this.state;
         const endpoint = this.props.data.charAt(0).toUpperCase() + this.props.data.slice(1);
         await axios.post(`http://localhost:4000/add${endpoint}`, {
+            date: this.formatDate(date),
             ...requestBody,
             userId: document.cookie
         });
@@ -106,7 +110,7 @@ export default class MedicalForm extends Component {
                         case "date":
                             return <div style={{textAlign: "left", color: "#008000"}}>
                                 <label>{field.display}:</label>
-                                <Calendar onChange={(date) => this.setState({[field.name]: this.formatDate(date)})}
+                                <Calendar onChange={(date) => this.setState({[field.name]: date})}
                                           value={this.state.date}/>
                             </div>
                         case "array":
