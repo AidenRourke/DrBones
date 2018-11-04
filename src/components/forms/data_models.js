@@ -2,16 +2,16 @@ export const dataModels = {
     medicalCondition: [
         {name: "name", type: "string", display: "Title",description:"Enter the name of the medical condition", required: true},
         {name: "date", type: "date", display: "Date", required: true},
-        {name: "notes", type: "array", display: "Notes",description:"Optional."}
+        {name: "notes", type: "array", display: "Notes",description:"Optional"}
     ],
     operation: [
-        {name: "medicalConditionId", type: "string", display: "Medical Condition",description:"Enter the name of the medical condition", required: true},
+        {name: "medicalConditionId", type: "condition", display: "Medical Condition",description:"Choose a medical condition", required: true},
         {name: "name", type: "string", display: "Title",description:"Enter the name of the operation", required: true},
         {name: "date", type: "date", display: "Date", required: true},
         {name: "notes", type: "array", display: "Notes",description:"Optional"}
     ],
     medication: [
-        {name: "medicalConditionId", type: "string", display: "Medical Condition",description:"Enter the name of the medical condition", required: true},
+        {name: "medicalConditionId", type: "condition", display: "Medical Condition",description:"Choose a medical condition", required: true},
         {name: "name", type: "string", display: "Title",description:"Enter the name of the medication", required: true},
         {name: "date", type: "date", display: "Date", required: true},
         {name: "dose", type: "string", display: "Dose",description:"Enter the dosage given", required: true},

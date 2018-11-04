@@ -24,7 +24,7 @@ const StyledRow = styled.div`
     justify-content: space-between;
     border-bottom: 1px solid lightgray;
     color: #000000;
-
+    overflow: auto;
     &:hover {
         background: rgba(0,0,0,0.2);
         cursor: pointer;

@@ -174,4 +174,4 @@ const StyledWidget = styled.div`
         box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.3);
       }
 
-`
+`;
