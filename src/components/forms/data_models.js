@@ -18,10 +18,10 @@ export const dataModels = {
 		{
 			medicalCondition: { name: "medicalCondition", type: "string", display: "Medical Condition" },
 			title: { name: "title", type: "string", display: "Title" },
-			date:{name:"date", display:"Date"},
+			date:{name:"date",type:"date", display:"Date"},
 			dose:{name:"dose", type:"string",display:"Dose"},
 			frequency:{name:"frequency",type:"string",display:"Frequency"},
-			timePeriod: "",
+			timePeriod:{name:"timePeriod",type:"string",display:"Time Period"},
 			notes: { name: "notes", type: "array", display: "Notes" },
 		}
 	]

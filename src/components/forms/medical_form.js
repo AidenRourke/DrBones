@@ -28,7 +28,7 @@ export default class MedicalForm extends Component {
 				}
 				else if( field.type === "array" ){
 					return <textarea value={field.name} onChange={e => this.setState({[field.name]: e.target.value})}/>
-				} else {
+				} else if(field.type === "date") {
 					return <Calendar onChange={this.onChange} value={this.state.date}/>
 				}
 			} )
