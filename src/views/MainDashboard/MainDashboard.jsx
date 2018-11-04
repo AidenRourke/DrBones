@@ -5,13 +5,11 @@ import List from "./List"
 const StyledDashboard = styled.div`
     display: flex;
     flex-direction: row;
-    width: 90%;
-    height: 80vh;
-    margin: 75px auto 0;
-    border: solid 2px #000000;
-    border-radius: 6px;
-    background-color: #e34a23;
-    justify-content: space-evenly;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    padding: 10px;
+    justify-content: space-around;
 `;
 
 export default class MainDashboard extends Component {
