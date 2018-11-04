@@ -84,7 +84,7 @@ export default class ConditionForm extends Component {
     }
 
     toggleForm = e => {
-        e.stopPropagation()
+        e.stopPropagation();
         this.setState({newCondition: !this.state.newCondition})
     };
 
@@ -113,9 +113,8 @@ export default class ConditionForm extends Component {
                                   value={this.state.date}/>
                     </InputField>
                     <InputField>
-                        <label>Notes:</label>
+                        <label>Notes (optional):</label>
                         <TextArea value={this.state.notes}
-                                  placeholder="optional"
                                   style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
                                   onChange={e => this.setState({notes: e.target.value})}/>
                     </InputField>
