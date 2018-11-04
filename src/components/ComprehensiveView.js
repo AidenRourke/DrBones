@@ -3,6 +3,7 @@ import styled from "styled-components";
 import axios from 'axios';
 import EditIcon from "./EditIcon";
 import {formatDate} from "../../src/utils/utils";
+import Button from "./Button";
 
 const ViewContainer = styled.div`
   width: 60%;
@@ -61,6 +62,7 @@ export default class ComprehensiveView extends Component {
                     notes: data.notes
                 });
                 this.getPrescriptions();
+                this.getOperations();
             }
         });
 
@@ -81,11 +83,40 @@ export default class ComprehensiveView extends Component {
         if (!response.data.error) {
             arr = response.data.results;
             for (index in arr) {
-                if(arr[index].medicalConditionId === this.props.context.uniqueId){
+                console.log(arr);
+                if(arr[index].unique_Id === this.props.medicalConditionId){
                     arrOfPrescriptions.push(arr[index].name);
                 }
             };
             this.setState({prescriptions: arrOfPrescriptions});
+        } else {
+            this.setState({failed: true});
+        }
+
+    }
+
+    async getOperations() {
+        let url = 'http://localhost:4000/getAllOperations';
+
+        const response = await axios.post(url, {
+            userId: document.cookie,
+            uniqueId: this.props.context.uniqueId
+        });
+
+        let index;
+        let arr;
+        let arrOfOperations = [];
+
+        if (!response.data.error) {
+            arr = response.data.results;
+            for (index in arr) {
+                console.log(arr);
+                if(arr[index].unique_Id === this.props.medicalConditionId){
+                    arrOfOperations.push(arr[index].name);
+                }
+            };
+            console.log(arrOfOperations);
+            this.setState({operations: arrOfOperations});
         } else {
             this.setState({failed: true});
         }
@@ -132,7 +163,7 @@ export default class ComprehensiveView extends Component {
     }
 
     render() {
-        const {onEdit} = this.props;
+        const {onEdit, onClose} = this.props;
         let jsx;
         if (this.props.context.widgetType === 'medication') {
             jsx = (
@@ -163,6 +194,7 @@ export default class ComprehensiveView extends Component {
                         <h1>{`Notes:`}</h1>
                         <h1>{`${this.state.notes}`}</h1>
                     </div>
+					<Button muted onClick={onClose}>Back</Button>
                 </ViewContainer>
             );
         } else if (this.props.context.widgetType === 'operation') {
@@ -182,6 +214,7 @@ export default class ComprehensiveView extends Component {
                         <h1>{`Notes:`}</h1>
                         <h1>{`${this.state.notes ? this.state.notes : 'No notes recorded!'} `}</h1>
                     </div>
+					<Button muted onClick={onClose}>Back</Button>
                 </ViewContainer>
             );
         } else if (this.props.context.widgetType === 'medicalCondition') {
@@ -199,8 +232,13 @@ export default class ComprehensiveView extends Component {
                     </div>
                     <div className={'line'}>
                         <h1>{`Prescribed Medications:`}</h1>
-                        <h1>{`${this.state.prescriptions ? this.state.prescriptions : 'No prescribed medications!'} `}</h1>
+                        <h1>{`${this.state.prescriptions && this.state.prescriptions.length !== 0 ? this.state.prescriptions: 'No prescribed medications!'} `}</h1>
                     </div>
+                    <div className={'line'}>
+                        <h1>{`Operations Done:`}</h1>
+                        <h1>{`${this.state.operations && this.state.operations.length !== 0 ? this.state.operations: 'No operations done!'} `}</h1>
+                    </div>
+                    <Button muted onClick={onClose}>Back</Button>
                 </ViewContainer>
             );
         } else {
