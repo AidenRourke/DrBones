@@ -86,7 +86,6 @@ export default class MedicalForm extends Component {
     formatDate(dateString) {
         let m = moment(dateString, `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'`);
         dateString = m.format('l');
-        alert(this.reverseString(dateString));
         return dateString;
     }
 

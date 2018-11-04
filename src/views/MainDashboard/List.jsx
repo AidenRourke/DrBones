@@ -94,16 +94,23 @@ class List extends Component {
     }
 
     render() {
+        const customStyles = {
+            content: {
+                'background-color' : 'rgba(0,0,0,.2)',
+                'border' : 'none'
+            }
+        };
+          
         return (
             <StyledWidget>
-                <Modal isOpen={this.state.displayInfoForm}
+                <Modal  isOpen={this.state.displayInfoForm}
                        onRequestClose={() => this.setState({displayInfoForm: false})}>
                     <MedicalForm data={this.props.widgetType} title={this.props.title}
                                  onClose={()=>this.onClose()}/>
                 </Modal>
-                <Modal isOpen={this.state.displayInfoPage}
+                <Modal  style={customStyles} isOpen={this.state.displayInfoPage}
                        onRequestClose={() => this.setState({displayInfoPage: false})}>
-                    <ComprehensiveView data={this.props.widgetType} context={this.state.context} title={this.props.title}
+                    <ComprehensiveView className={'animated fadeInUp'} data={this.props.widgetType} context={this.state.context} title={this.props.title}
                                  onClose={()=>this.onClose()}/>
                 </Modal>
                 <div className="title-container">
