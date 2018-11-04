@@ -14,7 +14,10 @@ const FormContainer = styled.div`
   width: 60%;
   margin: auto;
   text-align: center;
+  background-color: white;
   text-overline-color: #008000;
+  padding: 10px;
+  border-radius: 30px;
 `;
 
 const Buttons = styled.div`

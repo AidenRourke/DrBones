@@ -146,7 +146,7 @@ class List extends Component {
     }
 
     onClose(){
-        this.setState({displayInfoForm: false, displayInfoPage: false});
+        this.setState({displayInfoForm: false, displayInfoPage: false,});
     }
 
     onSave() {
@@ -162,9 +162,17 @@ class List extends Component {
     }
 
     render() {
+        const customStyles = {
+            content: {
+                'background-color' : 'rgba(0,0,0,0.2)',
+                'border' : 'none'
+            }
+        };
+          
         return (
             <StyledWidget>
-                <Modal isOpen={this.state.displayInfoForm || this.state.displayInfoPage}
+
+                <Modal style={customStyles} isOpen={this.state.displayInfoForm || this.state.displayInfoPage}
                        onRequestClose={() => this.setState({displayInfoForm: false, displayInfoPage: false})}>
                     {this.state.displayInfoForm && <MedicalForm data={this.props.widgetType}
                                                                 title={this.props.title}

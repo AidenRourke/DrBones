@@ -15,3 +15,10 @@
   flex-direction: column;
   justify-content: space-around;
 }
+ .ReactModal__Content .ReactModal__Content--after-open {
+  background-color: transparent;
+ }
+
+ .ReactModal__Overlay .ReactModal__Overlay--after-open {
+   background-color: transparent;
+ }

@@ -6,17 +6,35 @@ import {formatDate} from "../../src/utils/utils";
 import Button from "./Button";
 
 const ViewContainer = styled.div`
-  width: 60%;
+  width: 100%;
+  height: 100%
   margin: auto;
   text-align: center;
   text-overline-color: #008000;
-  color:green;
+  color:green
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color:transparent;
 
+  .container {
+      background: white;
+      border: 1px solid black;
+      width: 70%;
+      border-radius: 30px;
+  }
   .line {
       display: flex;
       width: 100%;
       flex-direction: row;
+      border-bottom: 1px solid lightgray;
       justify-content: space-between;
+  }
+
+  .button {
+      width: 30%;
+      border-radius: 30px;
+      margin: 3%;
   }
 `;
 
@@ -168,7 +186,8 @@ export default class ComprehensiveView extends Component {
         if (this.props.context.widgetType === 'medication') {
             jsx = (
                 <ViewContainer>
-                    <EditIcon onClick={onEdit}/>
+                    <div className='container animated fadeInUp'>
+                    <EditIcon onClick={() => onEdit(this.state)}/>
                     <h1>{`${this.state.name}`}</h1>
                     <div className={'line'}>
                         <h1>{`To Treat: `}</h1>
@@ -192,15 +211,17 @@ export default class ComprehensiveView extends Component {
                     </div>
                     <div className={'line'}>
                         <h1>{`Notes:`}</h1>
-                        <h1>{`${this.state.notes}`}</h1>
+                        <h1>{`${this.state.notes ? this.state.notes : 'No notes recorded!'} `}</h1>
                     </div>
-					<Button style={{borderRadius: "3px"}} muted onClick={onClose}>Back</Button>
+					<Button className='button' muted onClick={onClose}>Back</Button>
+                    </div>
                 </ViewContainer>
             );
         } else if (this.props.context.widgetType === 'operation') {
             jsx = (
                 <ViewContainer>
-                    <EditIcon onClick={onEdit}/>
+                    <div className='container'>
+                    <EditIcon onClick={() => onEdit(this.state)}/>
                     <h1>{`${this.state.name}`}</h1>
                     <div className={'line'}>
                         <h1>{`To Treat: `}</h1>
@@ -214,13 +235,15 @@ export default class ComprehensiveView extends Component {
                         <h1>{`Notes:`}</h1>
                         <h1>{`${this.state.notes ? this.state.notes : 'No notes recorded!'} `}</h1>
                     </div>
-					<Button style={{borderRadius: "3px"}} muted onClick={onClose}>Back</Button>
+					<Button className='button' muted onClick={onClose}>Back</Button>
+                    </div>
                 </ViewContainer>
             );
         } else if (this.props.context.widgetType === 'medicalCondition') {
             jsx = (
                 <ViewContainer>
-                    <EditIcon onClick={onEdit}/>
+                    <div className='container'>
+                    <EditIcon onClick={() => onEdit(this.state)}/>
                     <h1>{`${this.state.name}`}</h1>
                     <div className={'line'}>
                         <h1>{`Date:`}</h1>
@@ -238,7 +261,8 @@ export default class ComprehensiveView extends Component {
                         <h1>{`Operations Done:`}</h1>
                         <h1>{`${this.state.operations && this.state.operations.length !== 0 ? this.state.operations: 'No operations done!'} `}</h1>
                     </div>
-                    <Button style={{borderRadius: "3px"}} muted onClick={onClose}>Back</Button>
+                    <Button className='button' muted onClick={onClose}>Back</Button>
+                    </div>
                 </ViewContainer>
             );
         } else {
