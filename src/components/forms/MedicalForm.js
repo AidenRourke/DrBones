@@ -59,10 +59,7 @@ export default class MedicalForm extends Component {
                             return <div style={{textAlign: "left"}}>
                                 <label>{field.display}:</label>
                                 <Input type="text" value={this.state[field.name] || ""}
-<<<<<<< HEAD
 									   placeholder={field.description}
-=======
->>>>>>> ad401715d7ae4f32eaa9aedc16c1692929f442de
                                        style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
                                        onChange={e => this.setState({[field.name]: e.target.value})}/>
                             </div>;
@@ -76,11 +73,7 @@ export default class MedicalForm extends Component {
 							return <div style={{textAlign: "left"}}>
 								<label>{field.display}:</label>
 								<TextArea value={this.state[field.name]}
-<<<<<<< HEAD
                                        placeholder={field.description}
-=======
-                                       placeholder="Optional"
->>>>>>> ad401715d7ae4f32eaa9aedc16c1692929f442de
 									   style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
 									   onChange={e => this.setState({[field.name]: e.target.value})}/>
 							</div>;
