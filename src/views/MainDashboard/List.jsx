@@ -146,7 +146,7 @@ class List extends Component {
     }
 
     onClose(){
-        this.setState({displayInfoForm: false});
+        this.setState({displayInfoForm: false, displayInfoPage: false});
     }
 
     onSave() {
@@ -154,8 +154,7 @@ class List extends Component {
         window.location.reload()
     }
 
-    onEdit(formData) {
-        console.log(formData)
+    onEdit() {
         this.setState({
             displayInfoPage: false,
             displayInfoForm: true,

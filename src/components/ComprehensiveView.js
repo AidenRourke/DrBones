@@ -168,7 +168,7 @@ export default class ComprehensiveView extends Component {
         if (this.props.context.widgetType === 'medication') {
             jsx = (
                 <ViewContainer>
-                    <EditIcon onClick={() => onEdit(this.state)}/>
+                    <EditIcon onClick={onEdit}/>
                     <h1>{`${this.state.name}`}</h1>
                     <div className={'line'}>
                         <h1>{`To Treat: `}</h1>
@@ -200,7 +200,7 @@ export default class ComprehensiveView extends Component {
         } else if (this.props.context.widgetType === 'operation') {
             jsx = (
                 <ViewContainer>
-                    <EditIcon onClick={() => onEdit(this.state)}/>
+                    <EditIcon onClick={onEdit}/>
                     <h1>{`${this.state.name}`}</h1>
                     <div className={'line'}>
                         <h1>{`To Treat: `}</h1>
@@ -220,7 +220,7 @@ export default class ComprehensiveView extends Component {
         } else if (this.props.context.widgetType === 'medicalCondition') {
             jsx = (
                 <ViewContainer>
-                    <EditIcon onClick={() => onEdit(this.state)}/>
+                    <EditIcon onClick={onEdit}/>
                     <h1>{`${this.state.name}`}</h1>
                     <div className={'line'}>
                         <h1>{`Date:`}</h1>
