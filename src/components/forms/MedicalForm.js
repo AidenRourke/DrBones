@@ -98,10 +98,9 @@ export default class MedicalForm extends Component {
                             return <Popover isOpen={this.state.isPopoverOpen}
                                             position='bottom'
                                             onClickOutside={() => this.setState({isPopoverOpen: false})}
-                                            content={<ConditionForm onSubmit={conditionId => this.setState({
-                                                [field.name]: conditionId,
-                                                isPopoverOpen: false
-                                            })}/>}>
+                                            content={
+                                                <ConditionForm onSubmit={conditionId => this.setState({[field.name]: conditionId, isPopoverOpen: false})}/>
+                                            }>
                                 <div onClick={() => this.setState({isPopoverOpen: !this.state.isPopoverOpen})}
                                      style={{textAlign: "left", color: "#008000"}}>
                                     <label>{field.display}:</label>

@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import styled from "styled-components";
 import axios from "axios";
 
+import {dataModels} from './data_models';
+
 const Form = styled.div`
   background-color: white;
   width: 400px;
@@ -32,15 +34,25 @@ export default class ConditionForm extends Component {
         this.setState({conditions: response.data.results});
     }
 
+    toggleForm = e => {
+        e.stopPropagation()
+        this.setState({newCondition: true})
+    };
+
     render() {
-        const {onSubmit, conditions} = this.props;
+        const {onSubmit} = this.props;
 
         return <Form>
-            <div>
-                
-            </div>
-            <Item onClick={() => this.setState({newCondition: true})}>New Condition</Item>
-            {this.state.conditions.map(condition => <Item onClick={() => onSubmit(condition)}>{`${condition.name} ${condition.date}`}</Item>)}
+            {!this.state.newCondition ?
+                <div>
+                    <Item onClick={this.toggleForm}>New Condition</Item>
+                    {this.state.conditions.map(condition => <Item onClick={() => onSubmit(condition)}>{`${condition.name} ${condition.date}`}</Item>)}
+                </div>
+                :
+                <div>
+                    NEW FORM
+                </div>
+            }
         </Form>
     }
 }
