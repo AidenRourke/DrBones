@@ -32,13 +32,16 @@ const FlatButton = styled.div`
     width: 100%;
     box-sizing: border-box;
     border-radius: 3px;
-    border: 1px solid #B8C0CC;
+    border: 1px solid #008000;
     padding: 5px;
     line-height: 30px;
     font-weight: bold;
     cursor: pointer;
     &:hover {
       background-color: #84CF96;
+    }
+    span {
+      opacity: ${props => props.placeholder && "0.3"};
     }
 `;
 
@@ -98,14 +101,13 @@ export default class MedicalForm extends Component {
                             return <Popover isOpen={this.state.isPopoverOpen}
                                             position='bottom'
                                             onClickOutside={() => this.setState({isPopoverOpen: false})}
-                                            content={<ConditionForm onSubmit={conditionId => this.setState({
-                                                [field.name]: conditionId,
-                                                isPopoverOpen: false
-                                            })}/>}>
+                                            content={
+                                                <ConditionForm onSubmit={conditionId => this.setState({[field.name]: conditionId, isPopoverOpen: false})}/>
+                                            }>
                                 <div onClick={() => this.setState({isPopoverOpen: !this.state.isPopoverOpen})}
                                      style={{textAlign: "left", color: "#008000"}}>
                                     <label>{field.display}:</label>
-                                    <FlatButton>{(this.state[field.name] && this.state[field.name].name) || field.description}</FlatButton>
+                                    <FlatButton placeholder={!this.state[field.name]}><span>{(this.state[field.name] && this.state[field.name].name) || field.description}</span></FlatButton>
                                 </div>
                             </Popover>
                         case "string":
@@ -123,10 +125,9 @@ export default class MedicalForm extends Component {
                                           value={this.state.date}/>
                             </div>
                         case "array":
-                            return <div style={{textAlign: "left"}}>
-                                <label>{field.display}:</label>
+                            return <div style={{textAlign: "left", color: "#008000"}}>
+                                <label>{field.display} (optional):</label>
                                 <TextArea value={this.state[field.name]}
-                                          placeholder={field.description}
                                           style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
                                           onChange={e => this.setState({[field.name]: e.target.value})}/>
                             </div>;

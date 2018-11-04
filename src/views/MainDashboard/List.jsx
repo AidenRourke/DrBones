@@ -77,7 +77,7 @@ class List extends Component {
             let context = {
                 uniqueId: list.results[row].uniqueId, 
                 widgetType: this.props.widgetType
-            }
+            };
             listOfWidgets.push(
                 <Row key={key++} context={context} onClick={this.onClickRow.bind(this)}>
                     <span className="left">{list.results[row].name}</span>
@@ -90,9 +90,7 @@ class List extends Component {
 
     onClose(){
         this.setState({displayInfoForm: false});
-        this.apiCall((results) => {
-            this.mapRows(results);
-        });
+        window.location.reload()
     }
 
     render() {

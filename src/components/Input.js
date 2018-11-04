@@ -11,6 +11,10 @@ const StyledInput = styled.input`
   line-height: 30px;
   border: 2px solid #fff;
   padding: 5px;
+  ::placeholder {
+    color: #008000;
+    opacity: 0.3;
+  }
 `;
 
 export default class Input extends Component {
