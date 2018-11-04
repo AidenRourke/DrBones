@@ -94,7 +94,7 @@ export default class List extends Component {
 
         return <StyledWidget>
             <Modal isOpen={this.state.displayInfoForm} onRequestClose={() => this.setState({displayInfoForm: false})}>
-                <MedicalForm data={this.props.widgetType}/>
+                <MedicalForm data={this.props.widgetType} title={this.props.title} nClose={() => this.setState({displayInfoForm: false})}/>
             </Modal>
             <div className="title-container">
                 <span className="title">{this.props.title}</span>

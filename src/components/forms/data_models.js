@@ -1,28 +1,23 @@
 export const dataModels = {
-	medicalCondition: [
-		{
-			title: { name: "title", type: "string", display: "Title" },
-			date: {name:"date",display:"Date"},
-			notes: { name: "notes", type: "array", display: "Notes" },
-		}
-	],
-	operations: [
-		{
-			medicalCondition: { name: "medicalCondition", type: "string", display: "Medical Condition" },
-			title: { name: "title", type: "string", display: "Title" },
-			date:{name:"date",display:"Date"},
-			notes: { name: "notes", type: "array", display: "Notes" },
-		}
-	],
-	medication: [
-		{
-			medicalCondition: { name: "medicalCondition", type: "string", display: "Medical Condition" },
-			title: { name: "title", type: "string", display: "Title" },
-			date:{name:"date",type:"date", display:"Date"},
-			dose:{name:"dose", type:"string",display:"Dose"},
-			frequency:{name:"frequency",type:"string",display:"Frequency"},
-			timePeriod:{name:"timePeriod",type:"string",display:"Time Period"},
-			notes: { name: "notes", type: "array", display: "Notes" },
-		}
-	]
+    medicalCondition: [
+        {name: "title", type: "string", display: "Title"},
+        {name: "date", display: "Date"},
+        {name: "notes", type: "array", display: "Notes"}
+    ],
+    operations: [
+        {name: "medicalCondition", type: "string", display: "Medical Condition"},
+        {name: "title", type: "string", display: "Title"},
+        {name: "date", display: "Date"},
+        {name: "notes", type: "array", display: "Notes"}
+    ],
+    medication: [
+        {name: "medicalCondition", type: "string", display: "Medical Condition"},
+        {name: "title", type: "string", display: "Title"},
+        {name: "date", type: "date", display: "Date"},
+        {name: "dose", type: "string", display: "Dose"},
+        {name: "frequency", type: "string", display: "Frequency"},
+        {name: "timePeriod", type: "string", display: "Time Period"},
+        {name: "notes", type: "array", display: "Notes"},
+    ]
+
 };
