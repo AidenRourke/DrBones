@@ -59,6 +59,7 @@ export default class ComprehensiveView extends Component {
                     notes: data.notes
                 });
                 this.getPrescriptions();
+                this.getOperations();
             }
         });
 
@@ -80,12 +81,40 @@ export default class ComprehensiveView extends Component {
             arr = response.data.results;
             for (index in arr) {
                 console.log(arr);
-                if(arr[index].medicalConditionId === this.props.context.uniqueId){
+                if(arr[index].unique_Id === this.props.medicalConditionId){
                     arrOfPrescriptions.push(arr[index].name);
                 }
             };
             console.log(arrOfPrescriptions);
             this.setState({prescriptions: arrOfPrescriptions});
+        } else {
+            this.setState({failed: true});
+        }
+    
+    }
+
+    async getOperations() {
+        let url = 'http://localhost:4000/getAllOperations';
+
+        const response = await axios.post(url, {
+            userId: document.cookie,
+            uniqueId: this.props.context.uniqueId
+        });
+
+        let index;
+        let arr;
+        let arrOfOperations = [];
+
+        if (!response.data.error) {
+            arr = response.data.results;
+            for (index in arr) {
+                console.log(arr);
+                if(arr[index].unique_Id === this.props.medicalConditionId){
+                    arrOfOperations.push(arr[index].name);
+                }
+            };
+            console.log(arrOfOperations);
+            this.setState({operations: arrOfOperations});
         } else {
             this.setState({failed: true});
         }
@@ -195,7 +224,11 @@ export default class ComprehensiveView extends Component {
                     </div>
                     <div className={'line'}>
                         <h1>{`Prescribed Medications:`}</h1>
-                        <h1>{`${this.state.prescriptions ? this.state.prescriptions : 'No prescribed medications!'} `}</h1>
+                        <h1>{`${this.state.prescriptions && this.state.prescriptions.length !== 0 ? this.state.prescriptions: 'No prescribed medications!'} `}</h1>
+                    </div>
+                    <div className={'line'}>
+                        <h1>{`Operations Done:`}</h1>
+                        <h1>{`${this.state.operations && this.state.operations.length !== 0 ? this.state.operations: 'No operations done!'} `}</h1>
                     </div>
                 </ViewContainer>
             );
