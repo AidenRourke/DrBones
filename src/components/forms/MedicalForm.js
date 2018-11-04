@@ -58,6 +58,7 @@ export default class MedicalForm extends Component {
                             return <div style={{textAlign: "left"}}>
                                 <label>{field.display}:</label>
                                 <Input type="text" value={this.state[field.name] || ""}
+									   placeholder={`enter a ${field.description}`}
                                        style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
                                        onChange={e => this.setState({[field.name]: e.target.value})}/>
                             </div>;
