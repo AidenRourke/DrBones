@@ -22,6 +22,7 @@ class List extends Component {
             widgetRows: null
         }
         this.createRow = this.createRow.bind(this);
+        this.apiCall = this.apiCall.bind(this);
 
     }
 
@@ -29,17 +30,17 @@ class List extends Component {
         this.setState({
             widgetType: this.props.widgetType
         });
-        this.apiCall(function(results){
+        this.apiCall((results) => {
             this.mapRows(results);
         });
 
     }
 
-    async apiCall() {
+    async apiCall(callback) {
         let url, data;
         if (this.state.widgetType === 'medication') {
             url = 'https://drbones.herokuapp.com/getAllMedications';
-        } else if (this.state.widgetType === 'surgeries') {
+        } else if (this.state.widgetType === 'operations') {
             url = 'https://drbones.herokuapp.com/getAllOperations';
         } else {
             url = 'https://drbones.herokuapp.com/getAllMedicalConditions';
@@ -50,7 +51,7 @@ class List extends Component {
         });
 
         if (!response.data.error) {
-            console.log(response.data.results);
+            callback(response.data);
         } else {
             this.setState({failed: true});
         }
@@ -65,13 +66,17 @@ class List extends Component {
 
     mapRows(list) {
         let key = 0;
-        list.map(listItem =>(
-            <Row key={key++}>
-                <span>{listItem.name}</span>
-                <span>{listItem.date}</span>
-            </Row>
-        ));
-        this.setState({widgetRows : list});
+        let listOfWidgets = [];
+        let row;
+        for (row in list.results) {
+            listOfWidgets.push(
+                <Row key={key++}>
+                    <span>{list.results[row].name}</span>
+                    <span>{list.results[row].date}</span>
+                </Row>
+            );
+        };
+        this.setState({widgetRows : listOfWidgets});
     }
 
     render() {
