@@ -43,22 +43,29 @@ const FlatButton = styled.div`
 `;
 
 export default class MedicalForm extends Component {
-    state = {};
-
     constructor(props) {
         super(props);
+        this.state = {};
         this.handleSubmit.bind(this);
     }
 
-
     handleSubmit = async () => {
         const {onClose} = this.props;
-        const {isPopoverOpen, date, ...requestBody} = this.state;
+        const {isPopoverOpen, date, medicalConditionId, ...data} = this.state;
+
+        const requestBody = {
+            date: this.formatDate(date),
+            userId: document.cookie,
+            ...data
+        };
+
+        if (medicalConditionId) {
+            requestBody.medicalConditionId = medicalConditionId.uniqueId
+        }
+
         const endpoint = this.props.data.charAt(0).toUpperCase() + this.props.data.slice(1);
         await axios.post(`http://localhost:4000/add${endpoint}`, {
-            date: this.formatDate(date),
-            ...requestBody,
-            userId: document.cookie
+            ...requestBody
         });
         onClose();
     };
@@ -91,11 +98,14 @@ export default class MedicalForm extends Component {
                             return <Popover isOpen={this.state.isPopoverOpen}
                                             position='bottom'
                                             onClickOutside={() => this.setState({isPopoverOpen: false})}
-                                            content={<ConditionForm onSubmit={conditionId => this.setState({[field.name]: conditionId})}/>}>
+                                            content={<ConditionForm onSubmit={conditionId => this.setState({
+                                                [field.name]: conditionId,
+                                                isPopoverOpen: false
+                                            })}/>}>
                                 <div onClick={() => this.setState({isPopoverOpen: !this.state.isPopoverOpen})}
                                      style={{textAlign: "left", color: "#008000"}}>
                                     <label>{field.display}:</label>
-                                    <FlatButton>{this.state[field.name] || field.description}</FlatButton>
+                                    <FlatButton>{(this.state[field.name] && this.state[field.name].name) || field.description}</FlatButton>
                                 </div>
                             </Popover>
                         case "string":

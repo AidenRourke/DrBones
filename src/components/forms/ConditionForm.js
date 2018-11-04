@@ -33,9 +33,12 @@ export default class ConditionForm extends Component {
     }
 
     render() {
-        const {onSubmit} = this.props;
+        const {onSubmit, conditions} = this.props;
 
         return <Form>
+            <div>
+                
+            </div>
             <Item onClick={() => this.setState({newCondition: true})}>New Condition</Item>
             {this.state.conditions.map(condition => <Item onClick={() => onSubmit(condition)}>{`${condition.name} ${condition.date}`}</Item>)}
         </Form>
