@@ -18,12 +18,27 @@ export default class Login extends Component {
         failed: false
     };
 
+    componentWillMount() {
+        window.addEventListener("keypress", this.handleKeyDown)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("keypress", this.handleKeyDown);
+    }
+
+    handleKeyDown = e => {
+        const key = e.which || e.keyCode;
+        if (key === 13) { // 13 is enter
+            this.handleSubmit();
+        }
+    };
+
     handleSubmit = async () => {
         const {username, password} = this.state;
         const response = await axios.post("https://drbones.herokuapp.com/login", {username, password});
         if (!response.data.error) {
-            document.cookie = `username=${response.data.userId}`;
-            this.props.history.push('/')
+            document.cookie = response.data.userId;
+            this.props.history.push('/');
         } else {
             this.setState({failed: true});
         }

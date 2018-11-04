@@ -47,11 +47,11 @@ class List extends Component {
         )
         return (
             <StyledWidget>
-                <div className="title-container">
-                    <span className="title">{this.props.title}</span>
+                    <div className="title-container">
+                        <span className="title">{this.props.title}</span>
+                    </div>
+                    {widgetRows}
                     <div className="add-btn" onClick={() => this.createRow()}>+</div>
-                </div>
-                {widgetRows}
             </StyledWidget>
         )
     }
@@ -62,27 +62,48 @@ export default List;
 const StyledWidget = styled.div`
     display: flex;
     flex-direction: column;
-    height: 90%;
+    height: 97%;
+    position: relative;
     width: 30%;
-    background-color: blue;
-    margin: 15px 0;
+    background-color: white;
+    margin: auto;
+    align-text: center;
+    border-radius: 20px;
+    line-height: 40px;
+
 
     .title-container {
         width: 100%;
+        height: 5%;
+        border-radius: 20px 20px 0 0;
         background-color: lightGreen;
-        
-        .title {
-            float: left;
-        }
-    
-        .add-btn {
-            color: #000000;
-            background-color: lightGreen;
-            outline: none !important;
-            border: none !important;
-            float: right;
-            width: 60px;
-        }
     }
+    .add-btn {
+        color: #000000;
+        background-color: lightGreen;
+        outline: none !important;
+        border: none !important;
+        font-size: 25px;
+        align-text: center;
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        border-radius: 50%;
+        box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+        transition: 0.3s;
+        user-select: none;
+    }
+    .add-btn:active {
+        -webkit-transform: scale(0.9);
+                transform: scale(0.9);
+        box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.3);
+      }
+      .add-btn:hover {
+        cursor: pointer;
+        background-color:rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.3);
+      }
 
 `
