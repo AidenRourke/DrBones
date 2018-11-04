@@ -12,7 +12,7 @@ const FormContainer = styled.div`
   width: 60%;
   margin: auto;
   text-align: center;
-  text-overline-color: green;
+  text-overline-color: #008000;
 `;
 
 const Buttons = styled.div`
@@ -71,31 +71,31 @@ export default class MedicalForm extends Component {
     render() {
         const {data, onClose} = this.props;
         return <FormContainer>
-            <h1>{`${this.props.title} input form`}</h1>
+            <h1 style={{color:"green"}}>{`${this.props.title} input form`}</h1>
             {
                 dataModels[data].map(field => {
                     // eslint-disable-next-line default-case
                     switch (field.type) {
                         case "string":
-                            return <div style={{textAlign: "left"}}>
+                            return <div style={{textAlign: "left", color: "#008000"}}>
                                 <label>{field.display}:</label>
                                 <Input type="text" value={this.state[field.name] || ""}
 									   placeholder={field.description}
-                                       style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
+                                       style={{border: "1px solid #008000", borderRadius: "3px"}}
                                        onChange={e => this.setState({[field.name]: e.target.value})}/>
                             </div>;
                         case "date":
-                            return <div style={{textAlign: "left"}}>
+                            return <div style={{textAlign: "left", color: "#008000"}}>
                                 <label>{field.display}:</label>
                                 <Calendar onChange={(date) => this.onChange(date, field)}
                                 value={this.state.date}/>
                             </div>
 						case "array":
-							return <div style={{textAlign: "left"}}>
+							return <div style={{textAlign: "left", color: "#008000"}}>
 								<label>{field.display}:</label>
 								<TextArea value={this.state[field.name]}
                                        placeholder={field.description}
-									   style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
+									   style={{border: "1px solid #008000", borderRadius: "3px"}}
 									   onChange={e => this.setState({[field.name]: e.target.value})}/>
 							</div>;
 

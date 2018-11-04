@@ -10,6 +10,7 @@ const StyledDashboard = styled.div`
     margin: auto;
     padding: 10px;
     justify-content: space-around;
+    -webkit-text-fill-color: #008000;
 `;
 
 export default class MainDashboard extends Component {
@@ -17,13 +18,13 @@ export default class MainDashboard extends Component {
     render() {
         return (
             <StyledDashboard>
-                <List 
+                <List
                     title="Medication"
                     widgetType="medication"
                 />
                 <List 
                     title="Surgeries and Operations"
-                    widgetType="operations"
+                    widgetType="operation"
                 />
                 <List 
                     title="Medical Conditions"

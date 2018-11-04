@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const ButtonContainer = styled.button`
   height: 50px;
-  border: 1px solid ${props => props.disabled ? "#B8C0CC" : "none"};
+  border: 1px solid ${props => props.disabled ? "#008000" : "none"};
   font-weight: bold;
   font-size: 16px;
   width: 100%;
