@@ -3,6 +3,7 @@ import styled from "styled-components";
 import axios from 'axios';
 import Calendar from 'react-calendar';
 
+import TextArea from '../TextArea';
 import Input from '../Input';
 import Button from '../Button';
 import {dataModels} from './data_models';
@@ -27,14 +28,23 @@ export default class MedicalForm extends Component {
     state = {};
 
     handleSubmit = async () => {
-        console.log(this.state);
-        const { onClose } = this.props;
+        const {onClose} = this.props;
         const endpoint = this.props.data.charAt(0).toUpperCase() + this.props.data.slice(1);
         await axios.post(`https://drbones.herokuapp.com/add${endpoint}`, {
             ...this.state,
             userId: document.cookie
         });
         onClose();
+    };
+
+    checkCompletion = () => {
+        let completed = true;
+        dataModels[this.props.data].map(field => {
+            if (field.required && !this.state[field.name]) {
+                completed = false;
+            }
+        });
+        return completed;
     };
 
     render() {
@@ -47,7 +57,7 @@ export default class MedicalForm extends Component {
                         case "string":
                             return <div style={{textAlign: "left"}}>
                                 <label>{field.display}:</label>
-                                <Input type="text" value={this.state[field.name]}
+                                <Input type="text" value={this.state[field.name] || ""}
                                        style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
                                        onChange={e => this.setState({[field.name]: e.target.value})}/>
                             </div>;
@@ -57,11 +67,20 @@ export default class MedicalForm extends Component {
                                 <Calendar onChange={date => this.setState({[field.name]: date})}
                                           value={this.state.date}/>
                             </div>
+						case "array":
+							return <div style={{textAlign: "left"}}>
+								<label>{field.display}:</label>
+								<TextArea value={this.state[field.name]}
+                                       placeholder="Optional"
+									   style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
+									   onChange={e => this.setState({[field.name]: e.target.value})}/>
+							</div>;
+
                     }
                 })
             }
             <Buttons>
-                <Button onClick={this.handleSubmit}>Submit</Button>
+                <Button disabled={!this.checkCompletion()} onClick={this.handleSubmit}>Submit</Button>
                 <Button muted onClick={onClose}>Cancel</Button>
             </Buttons>
         </FormContainer>;

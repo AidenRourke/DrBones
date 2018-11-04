@@ -18,7 +18,6 @@ class List extends Component {
             displayInfoForm: false,
             displayInfoPage: false,
             displayCreateRow: false,
-            widgetType: "",
             widgetRows: null
         }
         this.createRow = this.createRow.bind(this);
@@ -27,9 +26,6 @@ class List extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            widgetType: this.props.widgetType
-        });
         this.apiCall((results) => {
             this.mapRows(results);
         });
@@ -37,10 +33,10 @@ class List extends Component {
     }
 
     async apiCall(callback) {
-        let url, data;
-        if (this.state.widgetType === 'medication') {
+        let url;
+        if (this.props.widgetType === 'medication') {
             url = 'https://drbones.herokuapp.com/getAllMedications';
-        } else if (this.state.widgetType === 'operations') {
+        } else if (this.props.widgetType === 'operations') {
             url = 'https://drbones.herokuapp.com/getAllOperations';
         } else {
             url = 'https://drbones.herokuapp.com/getAllMedicalConditions';
@@ -75,8 +71,9 @@ class List extends Component {
                     <span>{list.results[row].date}</span>
                 </Row>
             );
-        };
-        this.setState({widgetRows : listOfWidgets});
+        }
+        ;
+        this.setState({widgetRows: listOfWidgets});
     }
 
     render() {
