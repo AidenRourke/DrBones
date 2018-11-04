@@ -27,13 +27,23 @@ export default class MedicalForm extends Component {
     state = {};
 
     handleSubmit = async () => {
-        const { onClose } = this.props;
+        const {onClose} = this.props;
         const endpoint = this.props.data.charAt(0).toUpperCase() + this.props.data.slice(1);
         await axios.post(`https://drbones.herokuapp.com/add${endpoint}`, {
             ...this.state,
             userId: document.cookie
         });
         onClose();
+    };
+
+    checkCompletion = () => {
+        let completed = true;
+        dataModels[this.props.data].map(field => {
+            if (field.required && !this.state[field.name]) {
+                completed = false;
+            }
+        });
+        return completed;
     };
 
     render() {
@@ -46,7 +56,7 @@ export default class MedicalForm extends Component {
                         case "string":
                             return <div style={{textAlign: "left"}}>
                                 <label>{field.display}:</label>
-                                <Input type="text" value={this.state[field.name]}
+                                <Input type="text" value={this.state[field.name] || ""}
                                        style={{border: "1px solid #B8C0CC", borderRadius: "3px"}}
                                        onChange={e => this.setState({[field.name]: e.target.value})}/>
                             </div>;
@@ -60,7 +70,7 @@ export default class MedicalForm extends Component {
                 })
             }
             <Buttons>
-                <Button onClick={this.handleSubmit}>Submit</Button>
+                <Button disabled={!this.checkCompletion()} onClick={this.handleSubmit}>Submit</Button>
                 <Button muted onClick={onClose}>Cancel</Button>
             </Buttons>
         </FormContainer>;

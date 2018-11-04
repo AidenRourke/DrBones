@@ -1,22 +1,22 @@
 export const dataModels = {
     medicalCondition: [
-        {name: "name", type: "string", display: "Title"},
-        {name: "date", type: "date", display: "Date"},
+        {name: "name", type: "string", display: "Title", required: true},
+        {name: "date", type: "date", display: "Date", required: true},
         {name: "notes", type: "array", display: "Notes"}
     ],
     operations: [
-        {name: "medicalConditionId", type: "string", display: "Medical Condition"},
-        {name: "name", type: "string", display: "Title"},
-        {name: "date", type: "date", display: "Date"},
+        {name: "medicalConditionId", type: "string", display: "Medical Condition", required: true},
+        {name: "name", type: "string", display: "Title", required: true},
+        {name: "date", type: "date", display: "Date", required: true},
         {name: "notes", type: "array", display: "Notes"}
     ],
     medication: [
-        {name: "medicalConditionId", type: "string", display: "Medical Condition"},
-        {name: "name", type: "string", display: "Title"},
-        {name: "date", type: "date", display: "Date"},
-        {name: "dose", type: "string", display: "Dose"},
-        {name: "frequency", type: "string", display: "Frequency"},
-        {name: "timePeriod", type: "string", display: "Time Period"},
+        {name: "medicalConditionId", type: "string", display: "Medical Condition", required: true},
+        {name: "name", type: "string", display: "Title", required: true},
+        {name: "date", type: "date", display: "Date", required: true},
+        {name: "dose", type: "string", display: "Dose", required: true},
+        {name: "frequency", type: "string", display: "Frequency", required: true},
+        {name: "timePeriod", type: "string", display: "Time Period", required: true},
         {name: "notes", type: "array", display: "Notes"},
     ]
 
